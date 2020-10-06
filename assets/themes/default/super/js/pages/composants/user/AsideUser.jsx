@@ -19,8 +19,6 @@ export class AsideUser extends Component {
             username: {value: '', error: ''},
             email: {value: '', error: ''},
             roles: {value: [], error:''},
-            password: {value: '', error: ''},
-            password2: {value: '', error: ''},
             file: ''
         }
         this.handleChange = this.handleChange.bind(this)
@@ -39,7 +37,7 @@ export class AsideUser extends Component {
             users: this.props.users,
             username: {value: user.username, error:''},
             email: {value: user.email, error:''},
-            roles: {value: user.roles, error:''},
+            roles: {value: user.roles, error:''}
         })
         document.getElementById("username").focus();
     }
@@ -51,9 +49,7 @@ export class AsideUser extends Component {
             users: this.props.users,
             username: {value: "", error:''},
             email: {value: "", error:''},
-            roles: {value: [], error:''},
-            password: {value: '', error: ''},
-            password2: {value: '', error: ''},
+            roles: {value: [], error:''}
         }) 
     }
 
@@ -74,7 +70,7 @@ export class AsideUser extends Component {
     handleSubmit = (e) => {
         e.preventDefault()
 
-        const {type, user, users, username, email, roles, password, password2} = this.state
+        const {type, user, users, username, email, roles} = this.state
 
         let validate = Validateur.validateur([
             {type: "text", id: 'username', value: username.value},
@@ -88,20 +84,9 @@ export class AsideUser extends Component {
             validate.errors = {...validate.errors, ...{username: {value: username.value, error: 'Ce nom d\'utilisateur est déjà pris.'}}};
         }
 
-        if(type === "add"){
-            let addValidate = Validateur.validateur([
-                {type: "password", id: 'password', value: password.value},
-                {type: "password", id: 'password2', value: password2.value},
-            ]);
-            if(!addValidate.code){
-                validate.code = false;
-                validate.errors = {...validate.errors, ...addValidate.errors};
-            }
-
-            if(password.value != password2.value){
-                validate.code = false;
-                validate.errors = {...validate.errors, ...{password: {value: password.value, error: 'Les mots de passe ne sont pas similaires.'}}};
-            }
+        if(users.filter(v => v.email.toLowerCase() == email.value.toLowerCase() && v.id != id).length != 0){
+            validate.code = false;
+            validate.errors = {...validate.errors, ...{email: {value: email.value, error: 'Cette adresse email est déjà pris.'}}};
         }
 
         if(!validate.code){
@@ -144,7 +129,7 @@ export class AsideUser extends Component {
     }
 
     render () {
-        const {type, user, error, username, email, roles, password, password2} = this.state
+        const {type, user, error, username, email, roles} = this.state
 
         let rolesItems = [
             { 'id': 1, 'value': 'ROLE_SUPER_ADMIN', 'label': 'Super admin', 'identifiant': 'superamdin', 'checked': false },
@@ -160,7 +145,7 @@ export class AsideUser extends Component {
             })
         }
 
-        let infos = null, title = null, btnText = null, createPassword = null;
+        let infos = null, title = null, btnText = null;
 
         if(type === 'edit'){
             btnText = "Mettre à jour"
@@ -172,12 +157,6 @@ export class AsideUser extends Component {
             </div>
         }else{
             btnText = "Ajouter"
-            createPassword = <>
-                <div className="line line-2">
-                    <Input type="password" identifiant="password" valeur={password} onChange={this.handleChange}>Mot de passe</Input>
-                    <Input type="password" identifiant="password2" valeur={password2} onChange={this.handleChange}>Confirmer le mot de passe</Input>
-                </div>
-            </>
         }
 
         return <>
@@ -189,7 +168,6 @@ export class AsideUser extends Component {
                     <Input identifiant="username" valeur={username} onChange={this.handleChange}>Nom d'utilisateur</Input>
                     <Input type="email" identifiant="email" valeur={email} onChange={this.handleChange}>Adresse e-mail</Input>
                 </div>
-                {createPassword}
                 <div className="line">
                     <Checkbox items={rolesItems} name="roles" valeur={roles} onChange={this.handleChange}>Roles</Checkbox>
                 </div>

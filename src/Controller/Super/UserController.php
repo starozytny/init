@@ -77,9 +77,8 @@ class UserController extends AbstractController
             ->setEmail($data->email->value)
             ->setRoles($data->roles->value)
         ;
-
         $user->setPassword($passwordEncoder->encodePassword(
-            $user, $data->password->value
+            $user, uniqid()
         ));
 
         if($file){

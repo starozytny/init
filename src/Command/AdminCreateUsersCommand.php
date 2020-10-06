@@ -54,7 +54,7 @@ class AdminCreateUsersCommand extends Command
             ],
             [
                 'username' => 'shanks',
-                'email' => 'starozytny@hotmail.fr',
+                'email' => 'shanks@hotmail.fr',
                 'roles' => ['ROLE_USER']
             ]
         );
