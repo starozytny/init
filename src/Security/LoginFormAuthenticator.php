@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Entity\User;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -99,6 +100,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
+
+        $user = $token->getUser();
+        $user->setLastLogin(new DateTime());
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
 
         if ($this->security->isGranted('ROLE_SUPER_ADMIN')){
             return new RedirectResponse($this->urlGenerator->generate('super_dashboard'));

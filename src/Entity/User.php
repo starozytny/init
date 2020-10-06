@@ -85,6 +85,11 @@ class User implements UserInterface
      */
     private $avatar;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $last_login;
+
     public function __construct()
     {
         $this->setRoles(['ROLE_USER']);
@@ -315,5 +320,24 @@ class User implements UserInterface
         $this->avatar = $avatar;
 
         return $this;
+    }
+
+    public function getLastLogin(): ?\DateTimeInterface
+    {
+        return $this->last_login;
+    }
+
+    public function setLastLogin(?\DateTimeInterface $last_login): self
+    {
+        $this->last_login = $last_login;
+
+        return $this;
+    }
+    public function getLastLoginString() 
+    {
+        if($this->getLastLogin() == null){
+            return null;
+        }
+        return date_format($this->getLastLogin(), 'd/m/Y \à H:i');
     }
 }
