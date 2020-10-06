@@ -115,10 +115,19 @@
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     margin-right: 4px;
+    opacity: 1;
+
+    .icon-unlock{
+        display: none;
+    }
 
     &:hover{
-        color: $colorDisabled;
-        transform: scale(0.9);
+        .icon-padlock{
+            display: none;
+        }
+        .icon-unlock{
+            display: block;
+        }
     }
 }
 
