@@ -78,7 +78,7 @@ class AdminCreateUsersCommand extends Command
         }
 
         if ($input->getOption('option')) {
-            $io->title('Création des utilisateurs lambdas');
+            $io->title('Création de 110 utilisateurs lambdas');
             for($i=0; $i<110 ; $i++) {
                 $new = (new User())
                     ->setUsername("Utilisateur " . $i)
@@ -96,8 +96,8 @@ class AdminCreateUsersCommand extends Command
                 ));
 
                 $this->em->persist($new);
-                $io->text('USER : ' . "Utilisateur " . $i . ' créé' );
             }
+            $io->text('USER : Utilisateurs fake créés' );
         }
 
         

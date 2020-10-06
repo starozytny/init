@@ -94,7 +94,7 @@ class User implements UserInterface
     {
         $this->setRoles(['ROLE_USER']);
         $this->setCreateAt(new DateTime());
-        $this->setRenouvTime(new DateTime());
+        $this->setRenouvTime(new DateTime(date('Y-m-d', strtotime('+5 years'))));
         $this->setIsNew(true);
         $this->setAvatar('avatar/avatar-'.rand(0,10).'.jpg');
         try {
@@ -121,7 +121,7 @@ class User implements UserInterface
 
     public function setUsername(string $username): self
     {
-        $this->username = $username;
+        $this->username = mb_strtolower($username);
 
         return $this;
     }
