@@ -133,7 +133,7 @@ class CheckTime
         }
     }
 
-    public function moreThanToday(DateTimeInterface $dateTime)
+    public function lessThanToday(DateTimeInterface $dateTime)
     {
         $today = new DateTime();
         if($dateTime < $today){

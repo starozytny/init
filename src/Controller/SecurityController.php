@@ -90,7 +90,7 @@ class SecurityController extends AbstractController
             'Mot de passe oublié',
             'Lien de réinitialisation de mot de passe',
             'root/app/email/security/lost.html.twig',
-            ['user' => $user, 'url' => $url],
+            ['url' => $url],
             $user->getEmail()
         ) != true){
             return new JsonResponse([
@@ -143,12 +143,55 @@ class SecurityController extends AbstractController
 
             $user->setPasswordCode(null);
             $user->setPasswordTime(null);
+            $user->setRenouvCode(null);
+            $user->setRenouvTime(new DateTime());
             $user->setPassword($passwordEncoder->encodePassword($user, $password));
             $em->persist($user); $em->flush();
 
             $url = $this->generateUrl('app_login', array(), UrlGeneratorInterface::ABSOLUTE_URL);
             return new JsonResponse(['code' => 1, 'message' => 'Le mot de passe a été réinitialisé. La page va se rafraichir automatiquement.', 'url' => $url]);
         }
-        return $this->render('root/app/pages/security/reinit.html.twig', ['token' => $token, 'code' => $code]);
+        return $this->render('root/app/pages/security/reinit.html.twig', ['token' => $token, 'code' => $code, 'type' => 'reinit']);
+    }
+
+    
+    /**
+     * @Route("/renouvellement-mot-de-passe/{token}-{code}", name="app_password_renouv")
+     */
+    public function renouv(Request $request, $token, $code, UserPasswordEncoderInterface $passwordEncoder, Validation $validation)
+    {
+        $em = $this->getDoctrine()->getManager();
+        /** @var User $user */
+        $user = $em->getRepository(User::class)->findOneBy(array('token' => $token));
+        if(!$user){ return $this->redirectToRoute('app_login'); }
+
+        // If code invalide
+        if($user->getRenouvCode() != $code){
+            return $this->render('root/app/pages/security/reinit_expired.html.twig', ['message' => 'Le lien n\'est pas valide ou a expiré.']);
+        }
+
+        // Form submitted
+        if($request->isMethod('POST')){
+            $data = json_decode($request->getContent());
+            $password = $data->password->value;
+            $password2 = $data->password2->value;
+
+            // validate password not empty and equal
+            $resultat = $validation->validatePassword($password, $password2);      
+            if($resultat != 1){
+                return new JsonResponse(['code' => 2, 'errors' => [ 'error' => $resultat, 'success' => '' ]]);
+            }
+
+            $user->setPasswordCode(null);
+            $user->setPasswordTime(null);
+            $user->setRenouvCode(null);
+            $user->setRenouvTime(new DateTime());
+            $user->setPassword($passwordEncoder->encodePassword($user, $password));
+            $em->persist($user); $em->flush();
+
+            $url = $this->generateUrl('app_login', array(), UrlGeneratorInterface::ABSOLUTE_URL);
+            return new JsonResponse(['code' => 1, 'message' => 'Le mot de passe a été renouvellé. La page va se rafraichir automatiquement.', 'url' => $url]);
+        }
+        return $this->render('root/app/pages/security/reinit.html.twig', ['token' => $token, 'code' => $code, 'type' => 'renouv']);
     }
 }
