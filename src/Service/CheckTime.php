@@ -133,6 +133,15 @@ class CheckTime
         }
     }
 
+    public function moreThanToday(DateTimeInterface $dateTime)
+    {
+        $today = new DateTime();
+        if($dateTime < $today){
+            return 1;
+        }
+        return 0;
+    }
+
     public function moreThanFiveYear(DateTimeInterface $dateTime)
     {
         $n_year = date_format(new DateTime(), 'Y');

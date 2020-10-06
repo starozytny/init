@@ -3,8 +3,6 @@
 namespace App\Command;
 
 use App\Entity\Contact;
-use App\Entity\Devis;
-use App\Entity\Immo\Demande;
 use App\Service\CheckTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
