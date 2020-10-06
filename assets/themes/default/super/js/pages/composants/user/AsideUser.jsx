@@ -172,6 +172,7 @@ export class AsideUser extends Component {
                     <Checkbox items={rolesItems} name="roles" valeur={roles} onChange={this.handleChange}>Roles</Checkbox>
                 </div>
                 <div className="line">
+                    <label>Avatar</label>
                     <div className="form-files">
                         {user === undefined ? null : <div className="form-avatar"><img src={'../../uploads/' + user.avatar} alt="Avatar actuel de l'utilisateur"/></div>}
                         <Drop label="Téléverser un nouvel avatar" labelError="Seul les images sont acceptées."
