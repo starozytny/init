@@ -5,7 +5,9 @@
 {% block main_content %}
     {% if type == "reinit" %}
         <div id="form-reinit" data-url={{ path('app_password_reinit', {'token': token, 'code': code}) }}></div>
-    {% else %}
+    {% elseif type == "renouv" %}
         <div id="form-reinit" data-url={{ path('app_password_renouv', {'token': token, 'code': code}) }}></div>
+    {% else %}
+        <div id="form-reinit" data-url={{ path('app_password_unlock', {'token': token}) }}></div>
     {% endif %}
 {% endblock %}

@@ -5,12 +5,14 @@ namespace App\Controller\Super;
 use App\Entity\User;
 use App\Service\Export;
 use App\Service\FileUploader;
+use App\Service\Mailer;
 use App\Service\SerializeData;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -93,12 +95,27 @@ class UserController extends AbstractController
     /**
      * @Route("/convert-is-new/utilisateur/{user}", options={"expose"=true}, name="user_convert_is_new")
      */
-    public function convertIsNew($user)
+    public function convertIsNew($user, Mailer $mailer)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(User::class)->find($user);
         if(!$user){
             return new JsonResponse(['code' => 0, 'message' => '[ERREUR] Cet utilisateur n\'existe pas.']);
+        }
+
+        // Send mail
+        $url = $this->generateUrl('app_password_unlock', ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL);        
+        if($mailer->sendMail(
+            'Création de mot de passe',
+            'Lien de création de mot de passe',
+            'root/super/email/security/unlock.html.twig',
+            ['url' => $url],
+            $user->getEmail()
+        ) != true){
+            return new JsonResponse([
+                'code' => 2,
+                'errors' => [ 'error' => 'Le service est indisponible', 'success' => '' ]
+            ]);
         }
 
         $user->setIsNew(false);

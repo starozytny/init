@@ -45,9 +45,9 @@ export class UsersList extends Component {
                 <div className="item-user-avatar" onClick={this.handleOpenAside} data-id={elem.id}>
                     <img src={"../../uploads/" + elem.avatar} alt={"avatar de " + elem.username} />
                 </div>
-                <div className="item-user-username" onClick={this.handleOpenAside} data-id={elem.id}>
+                <div className="item-user-username">
                     {elem.isNew ? <><div className="user-new btn-icon" onClick={this.handleConvert} data-id={elem.id}><span className="icon-unlock"></span><span className="icon-padlock"></span><span className="tooltip">Débloquer</span></div></> : null}          
-                    <span>{elem.username}</span>
+                    <span onClick={this.handleOpenAside} data-id={elem.id}>{elem.username}</span>
                 </div>
                 <div className="item-user-email">{elem.email}</div>   
             </div>

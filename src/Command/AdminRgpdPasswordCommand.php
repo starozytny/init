@@ -59,7 +59,7 @@ class AdminRgpdPasswordCommand extends Command
                 if($this->mailer->sendMail(
                     'Renouvellement de mot de passe',
                     'Renouvellement du mot de passe de votre compte Website',
-                    'root/app/email/security/renouv.html.twig',
+                    'root/super/email/security/renouv.html.twig',
                     ['url' => $url],
                     $user->getEmail()
                 ) != true){

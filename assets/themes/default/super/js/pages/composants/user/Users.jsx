@@ -68,20 +68,31 @@ export class Users extends Component {
     }
 
     handleConvertIsNew = (id) => {
-        let self = this
-        axios({ method: 'post', url: Routing.generate('super_users_user_convert_is_new', {'user': id}) }).then(function (response) {
-            let data = response.data; let code = data.code; Loader.loader(false)
+        Swal.fire({
+            title: 'Débloquer cet utilisateur ?',
+            text: "Un mail pour la création du mot de passe sera envoyé.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Oui, je confirme',
+            cancelButtonText: 'Annuler'
+          }).then((result) => {
+            if (result.value) {
+                let self = this
+                axios({ method: 'post', url: Routing.generate('super_users_user_convert_is_new', {'user': id}) }).then(function (response) {
+                    let data = response.data; let code = data.code; Loader.loader(false)
 
-            if(code === 1){
-                let user = self.state.usersImmuable.filter(v => v.id == id)
-                user[0].isNew = false;
-
-                self.setState({users: ActionsArray.updateInArray(self.state.users, user[0])})
-                toastr.info('Mise à jour effectuée.')
-            }else{
-                toastr.error(data.message)
+                    if(code === 1){
+                        let user = self.state.usersImmuable.filter(v => v.id == id)
+                        user[0].isNew = false;
+        
+                        self.setState({users: ActionsArray.updateInArray(self.state.users, user[0])})
+                        toastr.info('Mise à jour effectuée.')
+                    }else{
+                        toastr.error(data.message)
+                    }
+                });
             }
-        });
+          })
     }
 
     handleDelete = (id) => {

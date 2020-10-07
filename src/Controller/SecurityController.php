@@ -133,20 +133,14 @@ class SecurityController extends AbstractController
         if($request->isMethod('POST')){
             $data = json_decode($request->getContent());
             $password = $data->password->value;
-            $password2 = $data->password2->value;
 
             // validate password not empty and equal
-            $resultat = $validation->validatePassword($password, $password2);         
+            $resultat = $validation->validatePassword($password, $data->password2->value);         
             if($resultat != 1){
                 return new JsonResponse(['code' => 2, 'errors' => [ 'error' => $resultat, 'success' => '' ]]);
             }
 
-            $user->setPasswordCode(null);
-            $user->setPasswordTime(null);
-            $user->setRenouvCode(null);
-            $user->setRenouvTime(new DateTime());
-            $user->setPassword($passwordEncoder->encodePassword($user, $password));
-            $em->persist($user); $em->flush();
+            $user = $this->setUserData($user, $password, $passwordEncoder);
 
             $url = $this->generateUrl('app_login', array(), UrlGeneratorInterface::ABSOLUTE_URL);
             return new JsonResponse(['code' => 1, 'message' => 'Le mot de passe a été réinitialisé. La page va se rafraichir automatiquement.', 'url' => $url]);
@@ -174,24 +168,67 @@ class SecurityController extends AbstractController
         if($request->isMethod('POST')){
             $data = json_decode($request->getContent());
             $password = $data->password->value;
-            $password2 = $data->password2->value;
 
             // validate password not empty and equal
-            $resultat = $validation->validatePassword($password, $password2);      
+            $resultat = $validation->validatePassword($password, $data->password2->value);      
             if($resultat != 1){
                 return new JsonResponse(['code' => 2, 'errors' => [ 'error' => $resultat, 'success' => '' ]]);
             }
 
-            $user->setPasswordCode(null);
-            $user->setPasswordTime(null);
-            $user->setRenouvCode(null);
-            $user->setRenouvTime(new DateTime());
-            $user->setPassword($passwordEncoder->encodePassword($user, $password));
-            $em->persist($user); $em->flush();
+            $user = $this->setUserData($user, $password, $passwordEncoder);
 
             $url = $this->generateUrl('app_login', array(), UrlGeneratorInterface::ABSOLUTE_URL);
             return new JsonResponse(['code' => 1, 'message' => 'Le mot de passe a été renouvellé. La page va se rafraichir automatiquement.', 'url' => $url]);
         }
         return $this->render('root/app/pages/security/reinit.html.twig', ['token' => $token, 'code' => $code, 'type' => 'renouv']);
+    }
+
+    /**
+     * @Route("/creation-mot-de-passe/{token}", name="app_password_unlock")
+     */
+    public function unlock(Request $request, $token, UserPasswordEncoderInterface $passwordEncoder, Validation $validation)
+    {
+        $em = $this->getDoctrine()->getManager();
+        /** @var User $user */
+        $user = $em->getRepository(User::class)->findOneBy(array('token' => $token));
+        if(!$user){ return $this->redirectToRoute('app_login'); }
+
+        // If invalide
+        if($user->getLastLogin() != null){
+            return $this->render('root/app/pages/security/reinit_expired.html.twig', ['message' => 'Le lien n\'est plus valide car vous vous êtes déjà connecté.']);
+        }
+
+        // Form submitted
+        if($request->isMethod('POST')){
+            $data = json_decode($request->getContent());
+            $password = $data->password->value;
+
+            // validate password not empty and equal
+            $resultat = $validation->validatePassword($password, $data->password2->value);      
+            if($resultat != 1){
+                return new JsonResponse(['code' => 2, 'errors' => [ 'error' => $resultat, 'success' => '' ]]);
+            }
+
+            $user->setLastLogin(new DateTime());
+            $user = $this->setUserData($user, $password, $passwordEncoder);
+
+            $url = $this->generateUrl('app_login', array(), UrlGeneratorInterface::ABSOLUTE_URL);
+            return new JsonResponse(['code' => 1, 'message' => 'Le mot de passe a été créé. La page va se rafraichir automatiquement.', 'url' => $url]);
+        }
+        return $this->render('root/app/pages/security/reinit.html.twig', ['token' => $token, 'type' => 'unlock']);
+    }
+
+    private function setUserData(User $user, $password, UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user->setPasswordCode(null);
+        $user->setPasswordTime(null);
+        $user->setRenouvCode(null);
+        $user->setRenouvTime(new DateTime(date('Y-m-d', strtotime('+5 years'))));
+        $user->setPassword($passwordEncoder->encodePassword($user, $password));
+        $em->persist($user); $em->flush();
+
+        return $user;
     }
 }

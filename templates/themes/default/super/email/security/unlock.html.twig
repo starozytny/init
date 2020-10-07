@@ -1,0 +1,28 @@
+{% extends 'themes/default/components/email/template.html.twig' %}
+
+{% block preheader %}Mail de création de mot de passe{% endblock %}
+
+{% block title %}Création de mot de passe{% endblock %}
+
+{% block body %}
+    <div>
+        <p>Bonjour, <br>
+            <br>
+            Afin d'accéder à votre compte sur notre site internet, veuillez créer votre mot de passe grâce au lien ci-dessous.
+        </p>
+        <p style="width: 540px;">
+            <a href="{{ url }}">Lien pour créer son mot de passe</a>
+            <br>
+            <br>
+            <br>
+            <br>
+            Si ce lien ne fonctionne pas, vous pouvez saisir manuellement ou copier/coller le lien suivant dans la barre d'adresse de votre navigateur :
+            <br>
+            {{ url }}
+        </p>
+        <br>
+        <p>
+            Nous vous souhaitons une agréable visite sur <a href="#">notre site</a>.
+        </p>
+    </div>
+{% endblock %}
