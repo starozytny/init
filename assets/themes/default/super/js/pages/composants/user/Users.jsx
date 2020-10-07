@@ -146,7 +146,8 @@ export class Users extends Component {
                   havePagination="true" taille={tailleList} itemsPagination={users} perPage="12" onUpdate={this.handleUpdateList}
                   haveSearch="true" onSearch={this.handleSearch}
                   haveAdd="true" onAdd={this.handleAdd}
-                  haveExport="true" urlExportExcel={Routing.generate('super_users_export')} nameExport="utilisateurs"
+                  haveExport="true" nameExport="utilisateurs" urlExportExcel={Routing.generate('super_users_export', {'format': 'excel'})} urlExportCsv={Routing.generate('super_users_export', {'format': 'csv'})}
+                  haveImport="true"
                   />
             <Aside content={asideContent} ref={this.aside}/>
         </>

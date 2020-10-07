@@ -36,7 +36,7 @@ class Export
         }
     }
 
-    public function createFile($type, $title, $filename, $header, $data, $max, $url, $folder="")
+    public function createFile($format, $title, $filename, $header, $data, $max, $url, $folder="")
     {
         $spreadsheet = new Spreadsheet();
 
@@ -69,7 +69,7 @@ class Export
         $this->fill($data, $max, $sheet, 2);
 
         // Create your Office 2007 Excel (XLSX Format)
-        if($type == 'excel'){
+        if($format == 'excel'){
             $writer = new Xlsx($spreadsheet);
         }else{
             $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);

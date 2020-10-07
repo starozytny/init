@@ -143,9 +143,9 @@ class UserController extends AbstractController
     }
 
     /**
-    * @Route("/export/utilisateurs", options={"expose"=true}, name="export")
+    * @Route("/export/utilisateurs/{format}", options={"expose"=true}, name="export")
     */
-    public function export(Export $export)
+    public function export(Export $export, $format)
     {
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository(User::class)->findBy(array(), array('username' => 'ASC'));
@@ -162,12 +162,17 @@ class UserController extends AbstractController
             if(!in_array($tmp, $data)){
                 array_push($data, $tmp);
             }
+        }        
+
+        if($format == 'excel'){
+            $fileName = 'utilisateurs.xlsx';
+            $header = array(array('ID', 'Nom utilisateur', 'Role', 'Email', 'Date de creation'));
+        }else{
+            $fileName = 'utilisateurs.csv';
+            $header = array(array('id', 'username', 'role', 'email', 'createAt'));
         }
 
-        $fileName = 'utilisateurs.xlsx';
-
-        $header = array(array('ID', 'Nom utilisateur', 'Role', 'Email', 'Date de creation'));
-        $json = $export->createFile('excel', 'Liste des utilisateurs', $fileName , $header, $data, 5, null);
+        $json = $export->createFile($format, 'Liste des utilisateurs', $fileName , $header, $data, 5, null);
         
         return new BinaryFileResponse($this->getParameter('private_directory'). 'export/' . $fileName);
     }
