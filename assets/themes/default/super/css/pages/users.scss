@@ -182,6 +182,66 @@
     }
 }
 
+.others + .aside{
+    .aside-user-form{
+        .radiobox-item{
+            width: 100%;
+        }
+    }
+}
+
+.anomalies{
+    max-height: 235px;
+    overflow: auto;
+    padding: 12px;
+    margin-bottom: 24px;
+    border: 1px solid $danger;
+    border-radius: 5px 0 0 5px;
+
+    /* width */
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+    
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+    .anomalie{
+        @include flex(row, center, flex-start);
+
+        & > div:not(:last-child){
+            margin-right: 12px;
+        }
+
+        .anomalie-id{
+            width: 15%;
+        }
+        .anomalie-username{
+            width: 35%;
+        }
+        .anomalie-email{
+            width: 50%;
+        }
+    }
+    .anomalie:not(:last-child){
+        padding-bottom: 8px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid $colorDisabled;
+    }
+}
+
 //                      __   _____ __    ___    __
 //                     | _| |___  / /_  ( _ )  |_ |
 //    _____ _____ _____| |     / / '_ \ / _ \   | |_____ _____ _____
@@ -203,6 +263,13 @@
             margin-left: 15px;
         }
     }
+
+    .others + .aside{
+        .radiobox-item label span{
+            width: calc(40% - 12px);
+        }
+    }
+    
 }
 
 //                      __   _ ____  ___   ___    __

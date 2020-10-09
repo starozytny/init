@@ -7,6 +7,7 @@ use App\Service\Export;
 use App\Service\FileUploader;
 use App\Service\Mailer;
 use App\Service\SerializeData;
+use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -143,7 +144,7 @@ class UserController extends AbstractController
     }
 
     /**
-    * @Route("/export/utilisateurs/{format}", options={"expose"=true}, name="export")
+    * @Route("/export/{format}", options={"expose"=true}, name="export")
     */
     public function export(Export $export, $format)
     {
@@ -172,8 +173,122 @@ class UserController extends AbstractController
             $header = array(array('id', 'username', 'role', 'email', 'createAt'));
         }
 
-        $json = $export->createFile($format, 'Liste des utilisateurs', $fileName , $header, $data, 5, null);
+        $json = $export->createFile($format, 'Liste des utilisateurs', $fileName , $header, $data, 5);
         
         return new BinaryFileResponse($this->getParameter('private_directory'). 'export/' . $fileName);
+    }
+    /**
+    * @Route("/import", options={"expose"=true}, name="import")
+    */
+    public function import(Request $request, UserPasswordEncoderInterface $passwordEncoder, Export $export)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $poursuivre = intval($request->get('poursuivre'));    // if continue after anomalies
+        $choice = intval($request->get('choice'));            // 0 ne pas ecraser | 1 ecraser
+        $nePasEcraser = 0; $ecraser = 1;
+        $file = $request->files->get('file');
+
+        dump($poursuivre);
+
+        if($file == null){
+            return new JsonResponse(['code' => 0, 'message' => 'Veuillez téléverser un fichier CSV.']);
+        }
+
+        $reader = Reader::createFromPath($file->getPathname());
+        $reader->setDelimiter(';');
+        $reader->setHeaderOffset(0);
+
+        // stack in records JSON and gets doublons
+        $records = [];
+        $anomaliesCsv = [];
+        $anomalies = [];
+        foreach ($reader as $r){
+            $record = json_decode(json_encode($r));
+
+            $existe = false;
+            foreach($records as $registered){
+                if($registered->username == $record->username || $registered->email == $record->email){
+                    array_push($anomaliesCsv, array_values($r));
+                    array_push($anomalies, $record);
+                    $existe = true;
+                }
+            }
+
+            if(!$existe){
+                if(!in_array($record, $records)){
+                    array_push($records, $record);
+                }
+            }            
+        }
+        // Liste des erronées 
+        if(!empty($anomalies)){
+
+            $fileName = 'import-duplicate.csv';
+            $header = $reader->getHeader();
+
+            $export->createFile('csv', 'Liste des doublons', $fileName , array($header), $anomaliesCsv, count($header), 'import/users/duplicate/');
+            $url = $this->generateUrl('super_users_import_duplicate', array(), UrlGeneratorInterface::ABSOLUTE_URL);
+            return new JsonResponse(['code' => 0, 'message' => 'Le fichier contient des doublons.', 'anomalies' => $anomalies, 'urlAnomalie' => $url, 'filename' => $fileName]);
+        }
+
+        // Processus de traitement des données
+        $users = $em->getRepository(User::class)->findAll();
+        foreach ($records as $record) {
+            if($record->id != ""){
+                // check if existe
+                $existe = false;
+                foreach ($users as $user){
+                    if($user->getId() == $record->id || $user->getUsername() == mb_strtolower($record->username) || $user->getEmail() == $record->email){
+                        $existe = true;
+                    }
+                }
+
+                if($existe){
+                    if($choice == $ecraser){ 
+                        // update
+                    }
+                }else{
+                    // nouveau car il n'existe pas dans la bdd
+                    $user = $this->addUserWithCsv($passwordEncoder, $record, null);
+                }
+            }else{
+                //forcément nouveau
+                $user = $this->addUserWithCsv($passwordEncoder, $record, null);
+            }
+
+            if($user){
+                $em->persist($user);
+            }
+            // if username or email empty
+
+        }
+        $em->flush();
+        
+        return new JsonResponse(['code' => 0]);
+    }
+
+     /**
+     * @Route("/telecharger-doublon-import/", name="import_duplicate")
+     */
+    public function downloadDuplicateImport()
+    {
+        return new BinaryFileResponse($this->getParameter('private_directory'). 'export/import/users/duplicate/import-duplicate.csv');
+    }
+
+    private function addUserWithCsv(UserPasswordEncoderInterface $passwordEncoder, $record, $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if($user == null){
+            $user = new User();
+        }
+        
+        $user->setUsername($record->username);
+        $user->setEmail($record->email);
+
+        $user->setPassword($passwordEncoder->encodePassword(
+            $user, uniqid()
+        ));
+        return $user;
     }
 }

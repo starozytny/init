@@ -117,6 +117,9 @@
     "jean85/pretty-package-versions": {
         "version": "1.2"
     },
+    "league/csv": {
+        "version": "9.6.1"
+    },
     "maennchen/zipstream-php": {
         "version": "2.1.0"
     },

@@ -1,6 +1,7 @@
 @import '../vars/vars.scss';
 
 .btn{
+    display: inline-block;
     border: 1px solid $color5;
     text-transform: uppercase;
     padding: 10px 22px;
@@ -22,6 +23,10 @@
             transform: scale(0.97);
         }
     }
+}
+a.btn{
+    width: calc(100% - 44px);
+    text-align: center;
 }
 
 .btn-icon{

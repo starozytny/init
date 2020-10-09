@@ -38,9 +38,30 @@ export function Checkbox({items, name, valeur, onChange, children}) {
     })
 
     return (
-        <div className={'form-group form-group-checbox' + (valeur.error ? " form-group-error" : "")}>
+        <div className={'form-group form-group-checkbox' + (valeur.error ? " form-group-error" : "")}>
             <label>{children}</label>
             <div className="checkbox-items">
+                {itemsInputs}
+            </div>
+            <div className="error">{valeur.error ? <><span className='icon-warning'></span>{valeur.error}</> : null}</div>
+        </div>
+    );
+}
+
+export function Radiobox({items, name, valeur, onChange, children}) {
+    let itemsInputs = items.map(elem => {
+        return <div className={"radiobox-item " + (elem.checked ? 'checked' : '')} key={elem.id}>
+            <label htmlFor={elem.identifiant}>
+                <span>{elem.label}</span>
+                <input type="radio" name={name} id={elem.identifiant} value={elem.value} checked={elem.checked ? 'checked' : ''} onChange={onChange}/>
+            </label>
+        </div>
+    })
+
+    return (
+        <div className={'form-group form-group-radiobox' + (valeur.error ? " form-group-error" : "")}>
+            <label>{children}</label>
+            <div className="radiobox-items">
                 {itemsInputs}
             </div>
             <div className="error">{valeur.error ? <><span className='icon-warning'></span>{valeur.error}</> : null}</div>

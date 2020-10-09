@@ -36,7 +36,7 @@ class Export
         }
     }
 
-    public function createFile($format, $title, $filename, $header, $data, $max, $url, $folder="")
+    public function createFile($format, $title, $filename, $header, $data, $max, $folder="")
     {
         $spreadsheet = new Spreadsheet();
 
@@ -92,8 +92,7 @@ class Export
         // Return a text response to the browser saying that the excel was succesfully created
         return new JsonResponse(array(
             'code' => 1,
-            'message' => 'Fichier généré.',
-            'url' => $url
+            'message' => 'Fichier généré.'
         ));
     }
 
