@@ -68,6 +68,53 @@ main{
     flex-wrap: wrap;
 }
 
+.dashboard-line-infos{
+    .settings-form{
+        width: calc(100% - 24px);
+
+        form{
+            margin-top: 24px;
+        }
+    }
+}
+
+.txt-initial, .txt-danger, .txt-primary, .txt-warning, .txt-alpha{
+    [class^="icon-"]{
+        margin-right: 8px;
+    }
+}
+
+.txt-danger{ color: $danger; }
+.txt-primary{ color: $primary; }
+.txt-warning{ color: $warning; }
+.txt-alpha{ color: $alpha; }
+
+//                      __   _____ __    ___    __
+//                     | _| |___  / /_  ( _ )  |_ |
+//    _____ _____ _____| |     / / '_ \ / _ \   | |_____ _____ _____
+//   |_____|_____|_____| |    / /| (_) | (_) |  | |_____|_____|_____|
+//                     | |   /_/  \___/ \___/   | |
+//                     |__|                    |__|
+@media (min-width:768px) {
+    .dashboard-line-infos{
+        .settings-form{
+            width: 100%;
+
+            .card-dash{
+                width: calc(100% - 28px);
+            }
+
+            .card-body{
+                width: 100%;
+            }
+
+            .line.line-3{
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
 //                      __   _  ___ ____  _  _     __
 //                     | _| / |/ _ \___ \| || |   |_ |
 //    _____ _____ _____| |  | | | | |__) | || |_   | |_____ _____ _____
@@ -101,6 +148,9 @@ main{
     }
     .dashboard-line{
         width: calc(100% + 22px);
+    }
+    .dashboard-line-infos{
+        width: 100%;
     }
 }
 //                      __   _  __    ___   ___    __

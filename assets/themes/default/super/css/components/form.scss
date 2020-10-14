@@ -207,6 +207,17 @@ input, textarea{
         }
     }
 
+    .line.line-3{
+        flex-direction: row;
+
+        .form-group{
+            width: 33%;
+        }
+        .form-group:not(:last-child){
+            margin-right: 12px;
+        }
+    }
+
     .form-button{
         @include flex(row, stretch, flex-start);
 

@@ -1,0 +1,17 @@
+{% extends 'themes/default/super/layout/layout.html.twig' %}
+
+{% block title %}Paramètres du site {{ parent() }}{% endblock %}
+
+{% block main_content %}
+    <h1>Paramètres</h1>
+
+    <div class="dashboard-line dashboard-line-infos">
+        <div id="settings" class="settings-form" data-settings="{{ settings is defined ? settings | json_encode() : null }}"></div>
+    </div>
+    
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('default_super_settings') }}
+{% endblock %}

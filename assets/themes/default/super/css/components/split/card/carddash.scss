@@ -66,7 +66,21 @@
             }
         }
     }
+}
 
+.card-dash-danger{
+    background-color: transparentize($color: $danger, $amount: 0.4);
+
+    form{
+        label{
+            color: $alpha;
+        }
+    }
+    .form-group-error{
+        .error{
+            color: $alpha;
+        }
+    }
 }
 
 //                      __   _____ __    ___    __

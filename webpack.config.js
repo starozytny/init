@@ -61,6 +61,7 @@ Encore
     .addEntry('default_super_home', './assets/themes/default/super/js/pages/home.jsx')
     .addEntry('default_super_users', './assets/themes/default/super/js/pages/users.jsx')
     .addEntry('default_super_rgpd', './assets/themes/default/super/js/pages/rgpd.jsx')
+    .addEntry('default_super_settings', './assets/themes/default/super/js/pages/settings.jsx')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

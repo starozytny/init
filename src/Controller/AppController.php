@@ -67,7 +67,7 @@ class AppController extends AbstractController
                 'Demande RGPD via le site Logilink',
                 'root/app/email/legales/rgpd.html.twig',
                 ['demande' => $demande],
-                'chanbora@logilink.fr'
+                $mailer->getEmailRgpd()
             ) != true){
                 return new JsonResponse([
                     'code' => 2,
@@ -107,7 +107,7 @@ class AppController extends AbstractController
                 'Demande contact via le site Logilink',
                 'root/app/email/contact/index.html.twig',
                 ['contact' => $demande],
-                'chanbora@logilink.fr'
+                $mailer->getEmailContact()
             ) != true){
                 return new JsonResponse([
                     'code' => 2,
