@@ -45,12 +45,14 @@ export class AsideImport extends Component {
         const {urlForm} = this.props
 
         Loader.loader(true)
+        let poursuivre = 0;
+        if(document.getElementsByName('poursuivre')[0] != undefined){
+            poursuivre = document.getElementsByName('poursuivre')[0].value;
+        }
         let fd = new FormData();
         fd.append('file', file);
         fd.append('choice', choices.value);
-        fd.append('poursuivre', document.getElementsByName('poursuivre').value)
-
-        console.log(document.getElementsByName('poursuivre').value)
+        fd.append('poursuivre', poursuivre)
         
         let self = this
         axios({ method: 'post', url: urlForm, data: fd, headers: {'Content-Type': 'multipart/form-data'} }).then(function (response) {

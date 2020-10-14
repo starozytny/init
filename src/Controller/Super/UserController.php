@@ -185,10 +185,8 @@ class UserController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $poursuivre = intval($request->get('poursuivre'));    // if continue after anomalies
         $choice = intval($request->get('choice'));            // 0 ne pas ecraser | 1 ecraser
-        $nePasEcraser = 0; $ecraser = 1;
+        $ecraser = 1;
         $file = $request->files->get('file');
-
-        dump($poursuivre);
 
         if($file == null){
             return new JsonResponse(['code' => 0, 'message' => 'Veuillez téléverser un fichier CSV.']);
@@ -202,12 +200,21 @@ class UserController extends AbstractController
         $records = [];
         $anomaliesCsv = [];
         $anomalies = [];
+        
         foreach ($reader as $r){
             $record = json_decode(json_encode($r));
-
             $existe = false;
+
+            // check data file
+            if($record->username == "" || $record->email == ""){
+                array_push($anomaliesCsv, array_values($r));
+                array_push($anomalies, $record);
+                $existe = true;
+            }
+
+            // check duplicate data
             foreach($records as $registered){
-                if($registered->username == $record->username || $registered->email == $record->email){
+                if($registered->id == $record->id || $registered->username == $record->username || $registered->email == $record->email){
                     array_push($anomaliesCsv, array_values($r));
                     array_push($anomalies, $record);
                     $existe = true;
@@ -220,51 +227,49 @@ class UserController extends AbstractController
                 }
             }            
         }
-        // Liste des erronées 
-        if(!empty($anomalies)){
 
-            $fileName = 'import-duplicate.csv';
-            $header = $reader->getHeader();
+        if($poursuivre == 0){ // si first trigger import
+            // Liste des erronées 
+            if(!empty($anomalies)){
 
-            $export->createFile('csv', 'Liste des doublons', $fileName , array($header), $anomaliesCsv, count($header), 'import/users/duplicate/');
-            $url = $this->generateUrl('super_users_import_duplicate', array(), UrlGeneratorInterface::ABSOLUTE_URL);
-            return new JsonResponse(['code' => 0, 'message' => 'Le fichier contient des doublons.', 'anomalies' => $anomalies, 'urlAnomalie' => $url, 'filename' => $fileName]);
-        }
+                $fileName = 'import-duplicate.csv';
+                $header = $reader->getHeader();
 
-        // Processus de traitement des données
+                $export->createFile('csv', 'Liste des doublons', $fileName , array($header), $anomaliesCsv, count($header), 'import/users/duplicate/');
+                $url = $this->generateUrl('super_users_import_duplicate', array(), UrlGeneratorInterface::ABSOLUTE_URL);
+                return new JsonResponse(['code' => 0, 'message' => 'Le fichier contient des doublons ou des données sont manquants.', 'anomalies' => $anomalies, 'urlAnomalie' => $url, 'filename' => $fileName]);
+            }
+        }   
+
+        // Processus de traitement des données sans les doublons
         $users = $em->getRepository(User::class)->findAll();
         foreach ($records as $record) {
-            if($record->id != ""){
-                // check if existe
-                $existe = false;
-                foreach ($users as $user){
-                    if($user->getId() == $record->id || $user->getUsername() == mb_strtolower($record->username) || $user->getEmail() == $record->email){
-                        $existe = true;
-                    }
+            // check if existe
+            $existe = false;
+            foreach ($users as $user){
+                if($user->getId() == $record->id || $user->getUsername() == mb_strtolower($record->username) || $user->getEmail() == $record->email){
+                    $existe = true;
+                    $userToEcrase = $user;
                 }
+            }
 
-                if($existe){
-                    if($choice == $ecraser){ 
-                        // update
-                    }
-                }else{
-                    // nouveau car il n'existe pas dans la bdd
-                    $user = $this->addUserWithCsv($passwordEncoder, $record, null);
+            if($existe){
+                if($choice == $ecraser){ 
+                    $user = $this->addUserWithCsv($passwordEncoder, $record, $userToEcrase);
                 }
             }else{
-                //forcément nouveau
+                // nouveau car il n'existe pas dans la bdd
                 $user = $this->addUserWithCsv($passwordEncoder, $record, null);
             }
 
             if($user){
                 $em->persist($user);
             }
-            // if username or email empty
 
         }
         $em->flush();
         
-        return new JsonResponse(['code' => 0]);
+        return new JsonResponse(['code' => 1]);
     }
 
      /**
@@ -277,8 +282,6 @@ class UserController extends AbstractController
 
     private function addUserWithCsv(UserPasswordEncoderInterface $passwordEncoder, $record, $user)
     {
-        $em = $this->getDoctrine()->getManager();
-
         if($user == null){
             $user = new User();
         }
@@ -286,9 +289,11 @@ class UserController extends AbstractController
         $user->setUsername($record->username);
         $user->setEmail($record->email);
 
-        $user->setPassword($passwordEncoder->encodePassword(
-            $user, uniqid()
-        ));
+        if($user == null){
+            $user->setPassword($passwordEncoder->encodePassword(
+                $user, uniqid()
+            ));
+        }
         return $user;
     }
 }
