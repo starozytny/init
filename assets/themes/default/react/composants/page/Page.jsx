@@ -14,7 +14,8 @@ export class Page extends Component {
             haveSearch, onSearch,
             haveAdd, onAdd,
             haveExport, urlExportExcel, urlExportCsv, nameExport,
-            haveImport, asideImport
+            haveImport, asideImport,
+            haveAllDelete
         } = this.props
 
         return <>
@@ -22,7 +23,8 @@ export class Page extends Component {
             {content}
             {havePagination ? <Pagination perPage={perPage} taille={taille} items={itemsPagination} onUpdate={(items) => this.props.onUpdate(items)}/> : null}
             <Others haveExport={haveExport} urlExportExcel={urlExportExcel} urlExportCsv={urlExportCsv} nameExport={nameExport} 
-                    haveImport={haveImport} asideImport={asideImport}/>
+                    haveImport={haveImport} asideImport={asideImport}
+                    haveAllDelete={haveAllDelete} />
         </>
     }
 }

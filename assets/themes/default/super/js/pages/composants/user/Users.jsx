@@ -150,6 +150,7 @@ export class Users extends Component {
                   haveAdd="true" onAdd={this.handleAdd}
                   haveExport="true" nameExport="utilisateurs" urlExportExcel={Routing.generate('super_users_export', {'format': 'excel'})} urlExportCsv={Routing.generate('super_users_export', {'format': 'csv'})}
                   haveImport="true" asideImport={asideImport}
+                  haveAllDelete="true"
                   />
             <Aside content={asideContent} ref={this.aside}/>
             

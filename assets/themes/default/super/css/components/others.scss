@@ -5,8 +5,12 @@
     margin-top: 30px;
     border-top: 1px solid $color5;
 
+    .title{
+        opacity: 0.7;
+    }
+
     .others-left + .others-right{
-        margin-top: 10px;
+        margin-top: 12px;
     }
 }
 
@@ -27,14 +31,34 @@
 //                     |__|                    |__|
 @media (min-width:768px) {
     .others{
-        @include flex(row, center, space-between);
+        @include flex(row, flex-start, space-between);
+
+        .others-left + .others-right{
+            margin-top: 0;
+        }
+    }
+
+    .others-left{
+        width: 205px;
+
+        .btn{
+            margin-bottom: 0;
+        }
     }
 
     .others-right{
-        @include flex(row, center, flex-end);
+        width: calc(100% - 205px - 55px);
+        margin-left: 55px;
+        .title{
+            text-align: right;
+        }    
+        .others-items{
+            @include flex(row, center, flex-end);
+            flex-wrap: wrap;
+        }
 
-        .others-item:not(:last-child){
-            margin-right: 12px;
+        .others-item{
+            margin-left: 12px;
         }
     }
 }

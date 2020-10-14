@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Routing from '../../../../../../../../public/bundles/fosjsrouting/js/router.min.js';
+import {Selector} from '../../../../../react/composants/page/Selector';
 
 export class UsersList extends Component {
     constructor (props) {
@@ -29,6 +30,7 @@ export class UsersList extends Component {
             return <div className="item-user" key={elem.id}>
                 <div className="item-user-actions">
                     <div className="user-selector">
+                        <Selector />
                         {elem.highRoleCode != 0 ? <div className="item-user-roles"><div className={"user-badge user-badge-" + elem.highRoleCode}>{elem.highRole}</div></div> : null}
                     </div>
                     <div className="user-actions">

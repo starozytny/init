@@ -136,6 +136,14 @@
     margin-bottom: 10px;
 }
 
+.user-selector{
+    @include flex(row, center, flex-start);
+
+    input + .item-user-roles{
+        margin-left: 12px;
+    }
+}
+
 .item-user-roles{
 
     & + .item-user-status{
