@@ -8,6 +8,7 @@ import {Page} from '../../../../../react/composants/page/Page';
 import {Aside} from '../../../../../react/composants/page/Aside';
 import Swal from 'sweetalert2';
 import {AsideUser} from './AsideUser';
+import {AsideImport} from './AsideImport';
 import {UsersList} from './UsersList';
 
 export class Users extends Component {
@@ -140,16 +141,18 @@ export class Users extends Component {
         </div>
 
         let asideContent = <AsideUser users={usersImmuable} onUpdate={this.handleUpdateUser} ref={this.asideuser} />
-
+        let asideImport = <AsideImport urlForm={Routing.generate('super_users_import')}/>
+        
         return <>
             <Page content={content} 
                   havePagination="true" taille={tailleList} itemsPagination={users} perPage="12" onUpdate={this.handleUpdateList}
                   haveSearch="true" onSearch={this.handleSearch}
                   haveAdd="true" onAdd={this.handleAdd}
                   haveExport="true" nameExport="utilisateurs" urlExportExcel={Routing.generate('super_users_export', {'format': 'excel'})} urlExportCsv={Routing.generate('super_users_export', {'format': 'csv'})}
-                  haveImport="true" urlImport={Routing.generate('super_users_import')}
+                  haveImport="true" asideImport={asideImport}
                   />
             <Aside content={asideContent} ref={this.aside}/>
+            
         </>
     }
 }
