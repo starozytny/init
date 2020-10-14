@@ -15,7 +15,28 @@
             'icon': 'home',
             'label': 'Dashboard',
             'name': 'admin'
-        },
+        }
+    ] %}
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        {% set menuSuper = [
+            {
+                'path': path('super_users_index'),
+                'icon': 'user',
+                'label': 'Utilisateurs',
+                'name': 'utilisateurs'
+            },
+            {
+                'path': path('super_rgpd_index'),
+                'icon': 'padlock',
+                'label': 'RGPD',
+                'name': 'rgpd'
+            },
+        ] %}
+        {% set menu = menu | merge(menuSuper) %}
+    {% endif %}
+
+    {% set menuAdmin = [
         {
             'path': path('admin_contact_index'),
             'icon': 'email',
@@ -23,6 +44,11 @@
             'name': 'contact'
         }
     ] %}
+    {% set menu = menu | merge(menuAdmin) %}
+
+    {#
+        --------- MENU BOTTOM ----------------------------------------------------
+    #}
 
     {% set menuBottom = [
         {
@@ -34,7 +60,7 @@
     ] %}
 
     {% if is_granted('ROLE_SUPER_ADMIN') %}
-        {% set menuSuper = [
+        {% set menuDashboard = [
             {
                 'path': path('super_dashboard'),
                 'icon': 'earth',
@@ -42,7 +68,7 @@
                 'name': 'dashboard'
             }
         ] %}
-        {% set menuBottom = menuBottom | merge(menuSuper) %}
+        {% set menuBottom = menuBottom | merge(menuDashboard) %}
     {% endif %}
 
     {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
@@ -56,6 +82,10 @@
         ] %}
         {% set menuBottom = menuBottom | merge(menuSwitch) %}
     {% endif %}
+
+    {#
+        --------- CONTENT ----------------------------------------------------
+    #}
 
     <div id="default" 
         data-title="Admin"
