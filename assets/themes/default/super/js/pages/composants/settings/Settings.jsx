@@ -4,6 +4,18 @@ import Routing from '../../../../../../../../public/bundles/fosjsrouting/js/rout
 import Loader from '../../../../../react/functions/loader';
 import Validateur from '../../../../../react/functions/validateur';
 import {Input, TextArea} from '../../../../../react/composants/Fields';
+import {Drop} from '../../../../../react/composants/Drop';
+
+function getBase64(file, self) {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+        self.setState({logo: {value: reader.result} })
+    };
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
+    };
+ }
 
 export class Settings extends Component {
     constructor (props){
@@ -31,10 +43,15 @@ export class Settings extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.handleGetFile = this.handleGetFile.bind(this)
     }
 
     handleChange = (e) => {
         this.setState({[ e.currentTarget.name]: {value: e.currentTarget.value}}) 
+    }
+
+    handleGetFile = (e) => { 
+        getBase64(e.file, this)
     }
 
     handleSubmit = (e) => {
@@ -56,7 +73,6 @@ export class Settings extends Component {
             Loader.loader(true)
 
             let self = this
-            console.log(self.state)
             axios({ method: 'post', url: Routing.generate('super_settings_edit'), data: self.state }).then(function (response) {
                 let data = response.data; let code = data.code; 
                 if(code === 1){
@@ -83,13 +99,21 @@ export class Settings extends Component {
                             <Input type="text" identifiant="websiteName" valeur={websiteName} onChange={this.handleChange}>Nom du site</Input>
                             <Input type="email" identifiant="emailGlobal" valeur={emailGlobal} onChange={this.handleChange}>E-mail expéditeur global</Input>
                         </div>
-                        <div className="line">
-                            <TextArea identifiant="logo" valeur={logo} onChange={this.handleChange}>Logo pour les <u>mails</u> en base64</TextArea>
-                        </div>
                         <div className="line line-2">
                             <Input type="email" identifiant="emailContact" valeur={emailContact} onChange={this.handleChange}>E-mail destinataire contact</Input>
                             <Input type="email" identifiant="emailRgpd" valeur={emailRgpd} onChange={this.handleChange}>E-mail destinataire RGPD</Input>
                         </div>
+                        <div className="line">
+                            <label>Logo pour les <u>mails</u></label>
+                            <div className="form-files">
+                                {logo.value === "" ? null : <div className="form-logo"><img src={logo.value} alt="logo actuel du site internet"/></div>}
+                                <Drop label="Téléverser le logo" labelError="Seul les fichiers au format jpeg, jpg et png sont acceptées."
+                                    accept={"image/*"} maxFiles={1} onGetFile={this.handleGetFile}/>
+                            </div>
+                        </div>
+                        {/* <div className="line">
+                            <TextArea identifiant="logo" valeur={logo} onChange={this.handleChange}>Logo pour les <u>mails</u> en base64</TextArea>
+                        </div> */}
                         <div className="form-button">
                             <button type="submit" className="btn btn-primary"><span>Valider</span></button>
                         </div>

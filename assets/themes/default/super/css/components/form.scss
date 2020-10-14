@@ -185,7 +185,27 @@ input, textarea{
             background: $danger;
         }
     }
-    
+}
+
+.form-files{
+    @include flex(flex, center, flex-start);
+
+    .form-image, .form-logo, .form-avatar{
+        margin-right: 25px;
+    }
+
+    .form-image, .form-logo{
+        img{
+            width: 100px;
+        }
+     }
+
+    .form-avatar{
+        img{
+            border-radius: 100px;
+            width: 64px; height: 64px;
+        }
+    }
 }
 //                      __   _____ __    ___    __
 //                     | _| |___  / /_  ( _ )  |_ |

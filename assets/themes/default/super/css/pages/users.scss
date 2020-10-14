@@ -1,7 +1,5 @@
 @import "../vars/vars.scss";
 
-@import '~react-dropzone-uploader/dist/styles.css';
-
 .item-user{
     background-color: $alpha;
     padding: 10px 10px 15px 10px;
@@ -174,20 +172,6 @@
     color: $color6;
     padding-bottom: 25px;
     border-bottom: 1px solid $color5;
-}
-
-.aside-user-form-edit{
-    .form-files{
-        @include flex(flex, center, flex-start);
-
-        .form-avatar{
-            margin-right: 25px;
-            img{
-                border-radius: 100px;
-                width: 64px; height: 64px;
-            }
-        }
-    }
 }
 
 .others + .aside{

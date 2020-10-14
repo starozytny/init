@@ -6,6 +6,7 @@
         border: 1px dashed $color5;
         width: 100% !important;
         height: auto !important;
+        background-color: $alpha;
     
         .dzu-inputLabel{
             @include flex(column, center, center);

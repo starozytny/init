@@ -73,7 +73,7 @@ export function TextArea({identifiant, valeur, onChange, children}) {
     return (
         <div className={'form-group' + (valeur.error ? " form-group-error" : "")}>
             <label htmlFor={identifiant}>{children}</label>
-            <textarea name={identifiant} id={identifiant} value={valeur.value} onChange={onChange}/>
+            <textarea name={identifiant} id={identifiant} value={valeur.value} rows="8" onChange={onChange}/>
             <div className="error">{valeur.error ? <><span className='icon-warning'></span>{valeur.error}</> : null}</div>
         </div>
     );
