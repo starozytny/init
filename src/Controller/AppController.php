@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Contact;
 use App\Entity\Rgpd;
 use App\Service\Mailer;
+use App\Service\SettingsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,7 +44,7 @@ class AppController extends AbstractController
     /**
      * @Route("/legales/demande-rgpd", options={"expose"=true}, name="app_rgpd")
      */
-    public function rgpd(Request $request, Mailer $mailer)
+    public function rgpd(Request $request, Mailer $mailer, SettingsService $settingsService)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -63,11 +64,11 @@ class AppController extends AbstractController
 
             // Send mail       
             if($mailer->sendMail(
+                'Demande RGPD via le site ' . $settingsService->getWebsiteName(),
                 'Demande RGPD',
-                'Demande RGPD via le site Logilink',
                 'root/app/email/legales/rgpd.html.twig',
-                ['demande' => $demande],
-                $mailer->getEmailRgpd()
+                ['demande' => $demande, 'settings' => $settingsService->getSettings()],
+                $settingsService->getEmailRgpd()
             ) != true){
                 return new JsonResponse([
                     'code' => 2,
@@ -85,7 +86,7 @@ class AppController extends AbstractController
     /**
      * @Route("/nous-contacter", options={"expose"=true}, name="app_contact")
      */
-    public function contact(Request $request, Mailer $mailer)
+    public function contact(Request $request, Mailer $mailer, SettingsService $settingsService)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -103,11 +104,11 @@ class AppController extends AbstractController
 
             // Send mail       
             if($mailer->sendMail(
-                'Demande de contact',
-                'Demande contact via le site Logilink',
+                'Demande de contact via le site ' . $settingsService->getWebsiteName(),
+                'Demande contact',
                 'root/app/email/contact/index.html.twig',
-                ['contact' => $demande],
-                $mailer->getEmailContact()
+                ['contact' => $demande, 'settings' => $settingsService->getSettings()],
+                $settingsService->getEmailContact()
             ) != true){
                 return new JsonResponse([
                     'code' => 2,

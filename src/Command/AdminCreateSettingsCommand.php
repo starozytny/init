@@ -16,21 +16,23 @@ class AdminCreateSettingsCommand extends Command
     {
         $this
             ->setDescription('Initiate settings website')
-            ->addArgument('email_global', InputArgument::REQUIRED, 'Argument description')
-            ->addArgument('email_contact', InputArgument::REQUIRED, 'Argument description')
-            ->addArgument('email_rgpd', InputArgument::REQUIRED, 'Argument description')
+            ->addArgument('website_name', InputArgument::REQUIRED, 'Nom du site')
+            ->addArgument('email_global', InputArgument::REQUIRED, 'Expediteur')
+            ->addArgument('email_contact', InputArgument::REQUIRED, 'destinataire contact')
+            ->addArgument('email_rgpd', InputArgument::REQUIRED, 'destinataire rgpd')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+        $website_name = $input->getArgument('website_name');
         $email_global = $input->getArgument('email_global');
         $email_contact = $input->getArgument('email_contact');
         $email_rgpd = $input->getArgument('email_rgpd');
 
-        if(!$email_global || !$email_contact || !$email_rgpd){
-            $io->error('Les arguments email_global, email_contact et email_rgpd sont obligatoires.');
+        if(!$website_name || !$email_global || !$email_contact || !$email_rgpd){
+            $io->error('Les arguments website_name email_global, email_contact et email_rgpd sont obligatoires.');
         }
 
         $io->comment('--- [FIN DE LA COMMANDE] ---');

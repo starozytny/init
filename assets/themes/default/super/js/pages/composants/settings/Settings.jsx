@@ -3,13 +3,13 @@ import axios from 'axios/dist/axios';
 import Routing from '../../../../../../../../public/bundles/fosjsrouting/js/router.min.js';
 import Loader from '../../../../../react/functions/loader';
 import Validateur from '../../../../../react/functions/validateur';
-import {Input} from '../../../../../react/composants/Fields';
+import {Input, TextArea} from '../../../../../react/composants/Fields';
 
 export class Settings extends Component {
     constructor (props){
         super ()
 
-        let emailGlobal = '', emailContact = '', emailRgpd = '';
+        let emailGlobal = '', emailContact = '', emailRgpd = '', websiteName = '', logo = '';
 
         if(props.settings != undefined && props.settings != ''){
             let data = JSON.parse(JSON.parse(props.settings))
@@ -17,15 +17,17 @@ export class Settings extends Component {
             emailGlobal = setting.emailGlobal
             emailContact = setting.emailContact
             emailRgpd = setting.emailRgpd
+            websiteName = setting.websiteName
+            logo = setting.logo
         }
         
         this.state = {
             emailGlobal: {value: emailGlobal, error: ''},
             emailContact: {value: emailContact, error: ''},
             emailRgpd: {value: emailRgpd, error: ''},
+            websiteName: {value: websiteName, error: ''},
+            logo: {value: logo, error: ''}
         }
-
-        
 
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleChange = this.handleChange.bind(this)
@@ -38,12 +40,14 @@ export class Settings extends Component {
     handleSubmit = (e) => {
         e.preventDefault()
 
-        const {emailGlobal, emailContact, emailRgpd} = this.state
+        const {emailGlobal, emailContact, emailRgpd, websiteName, logo} = this.state
 
         let validate = Validateur.validateur([
             {type: "email", id: 'emailGlobal', value: emailGlobal.value},
             {type: "email", id: 'emailContact', value: emailContact.value},
-            {type: "email", id: 'emailRgpd', value: emailRgpd.value}
+            {type: "email", id: 'emailRgpd', value: emailRgpd.value},
+            {type: "text", id: 'websiteName', value: websiteName.value},
+            {type: "text", id: 'logo', value: logo.value}
         ]);
 
         if(!validate.code){
@@ -66,7 +70,7 @@ export class Settings extends Component {
     }
 
     render () {
-        const {emailGlobal, emailContact, emailRgpd} = this.state
+        const {emailGlobal, emailContact, emailRgpd, websiteName, logo} = this.state
         const {isDanger} = this.props
 
         return <>
@@ -75,8 +79,14 @@ export class Settings extends Component {
                     {isDanger == 1 ? <span className="txt-alpha"><span className="icon-warning"></span>Veuillez configurer les paramètres du sites.</span> : null}
                     
                     <form onSubmit={this.handleSubmit}>
-                        <div className="line line-3">
+                        <div className="line line-2">
+                            <Input type="text" identifiant="websiteName" valeur={websiteName} onChange={this.handleChange}>Nom du site</Input>
                             <Input type="email" identifiant="emailGlobal" valeur={emailGlobal} onChange={this.handleChange}>E-mail expéditeur global</Input>
+                        </div>
+                        <div className="line">
+                            <TextArea identifiant="logo" valeur={logo} onChange={this.handleChange}>Logo pour les <u>mails</u> en base64</TextArea>
+                        </div>
+                        <div className="line line-2">
                             <Input type="email" identifiant="emailContact" valeur={emailContact} onChange={this.handleChange}>E-mail destinataire contact</Input>
                             <Input type="email" identifiant="emailRgpd" valeur={emailRgpd} onChange={this.handleChange}>E-mail destinataire RGPD</Input>
                         </div>

@@ -1,6 +1,6 @@
 {% extends 'themes/default/components/email/template.html.twig' %}
 
-{% block preheader %}Mail de création de mot de passe{% endblock %}
+{% block preheader %}Bienvenue ! Voici la procédure pour créer son mot de passe {{ settings.websiteName }}.{% endblock %}
 
 {% block title %}Création de mot de passe{% endblock %}
 
@@ -8,6 +8,8 @@
     <div>
         <p>Bonjour, <br>
             <br>
+            Votre identifiant de connexion est  : <b>{{ user.username }}</b>
+            <br><br>
             Afin d'accéder à votre compte sur notre site internet, veuillez créer votre mot de passe grâce au lien ci-dessous.
         </p>
         <p style="width: 540px;">

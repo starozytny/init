@@ -1,6 +1,6 @@
 {% extends 'themes/default/components/email/template.html.twig' %}
 
-{% block preheader %}Mail de mot de passe oublié{% endblock %}
+{% block preheader %}Voici la procédure pour son mot de passe oublié sur le site {{ settings.websiteName }}.{% endblock %}
 
 {% block title %}Mot de passe oublié{% endblock %}
 
@@ -8,6 +8,8 @@
     <div>
         <p>Bonjour, <br>
             <br>
+            Votre identifiant de connexion est  : <b>{{ user.username }}</b>
+            <br><br>
             Vous avez fait une demande de réinitialisation de mot de passe pour accéder à votre compte.
         </p>
         <p style="width: 540px;">

@@ -8,13 +8,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @Route("/administrator/parametres", name="super_settings_")
  */
 class SettingsController extends AbstractController
 {
-    const ATTRIBUTES_SETTINGS = ['id', 'emailGlobal', 'emailContact', 'emailRgpd'];
+    const ATTRIBUTES_SETTINGS = ['id', 'websiteName', 'logo', 'emailGlobal', 'emailContact', 'emailRgpd'];
 
     /**
      * @Route("/", options={"expose"=true}, name="edit")
@@ -28,9 +29,12 @@ class SettingsController extends AbstractController
             $settings = (count($settings) == 0) ? new Settings() : $settings[0];
 
             $data = json_decode($request->getContent());
+            $settings->setWebsiteName($data->websiteName->value);
             $settings->setEmailGlobal($data->emailGlobal->value);
             $settings->setEmailContact($data->emailContact->value);
             $settings->setEmailRgpd($data->emailRgpd->value);
+            $settings->setLogo($data->logo->value);
+            $settings->setUrl($this->generateUrl('app_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL));
     
             $em->persist($settings); $em->flush();
             return new JsonResponse(['code' => 1]);

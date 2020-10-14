@@ -32,6 +32,21 @@ class Settings
      */
     private $email_global;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $website_name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $url;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $logo;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +84,42 @@ class Settings
     public function setEmailGlobal(string $email_global): self
     {
         $this->email_global = $email_global;
+
+        return $this;
+    }
+
+    public function getWebsiteName(): ?string
+    {
+        return $this->website_name;
+    }
+
+    public function setWebsiteName(string $website_name): self
+    {
+        $this->website_name = $website_name;
+
+        return $this;
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(string $url): self
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    public function getLogo(): ?string
+    {
+        return $this->logo;
+    }
+
+    public function setLogo(string $logo): self
+    {
+        $this->logo = $logo;
 
         return $this;
     }

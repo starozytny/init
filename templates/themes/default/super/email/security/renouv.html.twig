@@ -1,6 +1,6 @@
 {% extends 'themes/default/components/email/template.html.twig' %}
 
-{% block preheader %}Mail de renouvellement de mot de passe{% endblock %}
+{% block preheader %}Votre mot de passe n'a pas changé depuis très longtemps sur notre site {{ settings.websiteName }}.{% endblock %}
 
 {% block title %}Renouvellement de mot de passe{% endblock %}
 
@@ -8,6 +8,8 @@
     <div>
         <p>Bonjour, <br>
             <br>
+            Votre identifiant de connexion est  : <b>{{ user.username }}</b>
+            <br><br>
             Conformément aux recommandation de la CNIL (Commission nationale de l'informatique et des libertés) et du RGPD, nous vous recommandons de
             modifier votre mot de passe. En effet, cela fait 5 ans que vous n'avez pas changer de mot de passe.
         </p>

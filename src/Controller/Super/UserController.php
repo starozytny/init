@@ -7,6 +7,7 @@ use App\Service\Export;
 use App\Service\FileUploader;
 use App\Service\Mailer;
 use App\Service\SerializeData;
+use App\Service\SettingsService;
 use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -96,7 +97,7 @@ class UserController extends AbstractController
     /**
      * @Route("/convert-is-new/utilisateur/{user}", options={"expose"=true}, name="user_convert_is_new")
      */
-    public function convertIsNew($user, Mailer $mailer)
+    public function convertIsNew($user, Mailer $mailer, SettingsService $settingsService)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(User::class)->find($user);
@@ -107,10 +108,10 @@ class UserController extends AbstractController
         // Send mail
         $url = $this->generateUrl('app_password_unlock', ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL);        
         if($mailer->sendMail(
-            'Création de mot de passe',
+            'Création de mot de passe pour le site ' . $settingsService->getWebsiteName(),
             'Lien de création de mot de passe',
             'root/super/email/security/unlock.html.twig',
-            ['url' => $url],
+            ['url' => $url, 'user' => $user, 'settings' => $settingsService->getSettings()],
             $user->getEmail()
         ) != true){
             return new JsonResponse([

@@ -4,7 +4,6 @@
 namespace App\Service;
 
 use App\Entity\Settings;
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
@@ -12,17 +11,17 @@ use Symfony\Component\Mailer\MailerInterface;
 class Mailer
 {
     private $mailer;
-    private $em;
+    private $settingsService;
 
-    public function __construct(MailerInterface $mailer, EntityManagerInterface $em)
+    public function __construct(MailerInterface $mailer, SettingsService $settingsService)
     {
         $this->mailer = $mailer;
-        $this->em = $em;
+        $this->settingsService = $settingsService;
     }
 
     public function sendMail($title, $text, $html, $params, $email, $from = null)
     {
-        $from = ($from == null) ? $this->getEmailExpediteurGlobal() : $from;
+        $from = ($from == null) ? $this->settingsService->getEmailExpediteurGlobal() : $from;
 
         $email = (new TemplatedEmail())
             ->from($from)
@@ -38,32 +37,5 @@ class Mailer
         } else {
             return 'Le message n\'a pas pu être délivré. Veuillez contacter le support.';
         }
-    }
-
-    private function getSettings(){
-        $set = $this->em->getRepository(Settings::class)->findAll();
-        if(count($set) == 0){
-            throw new Exception('[Erreur MAIL] Les settings ne sont pas paramétrés.');
-        }
-
-        return $set[0];
-    }
-
-    public function getEmailExpediteurGlobal(){
-        $setting = $this->getSettings();
-
-        return $setting->getEmailGlobal();
-    }
-
-    public function getEmailContact(){
-        $setting = $this->getSettings();
-
-        return $setting->getEmailContact();
-    }
-
-    public function getEmailRgpd(){
-        $setting = $this->getSettings();
-
-        return $setting->getEmailRgpd();
     }
 }

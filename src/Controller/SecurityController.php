@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Service\CheckTime;
 use App\Service\Mailer;
+use App\Service\SettingsService;
 use App\Service\Validation;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,7 +53,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/lost/{user}", options={"expose"=true}, name="app_password_lost")
      */
-    public function lost(Request $request, Mailer $mailer, CheckTime $checkTime, User $user = null)
+    public function lost(Request $request, Mailer $mailer, SettingsService $settingsService, CheckTime $checkTime, User $user = null)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -87,10 +88,10 @@ class SecurityController extends AbstractController
         // Send mail
         $url = $this->generateUrl('app_password_reinit', ['token' => $user->getToken(), 'code' => $code], UrlGeneratorInterface::ABSOLUTE_URL);        
         if($mailer->sendMail(
-            'Mot de passe oublié',
+            'Mot de passe oublié pour le site ' . $settingsService->getWebsiteName(),
             'Lien de réinitialisation de mot de passe',
             'root/app/email/security/lost.html.twig',
-            ['url' => $url],
+            ['url' => $url, 'user' => $user, 'settings' => $settingsService->getSettings()],
             $user->getEmail()
         ) != true){
             return new JsonResponse([
