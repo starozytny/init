@@ -144,6 +144,31 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/delete-all/utilisateurs", options={"expose"=true}, name="user_delete_all")
+     */
+    public function deleteAll(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $selectors = $request->get('selectors');
+        $usersId = explode(',', $selectors);
+
+        $users = $em->getRepository(User::class)->findBy(['id' => $usersId]);
+        if(count($users) == 0){
+            return new JsonResponse(['code' => 0, 'message' => 'Aucun utilisateur sélectionné.']);
+        }
+
+        foreach($users as $user){
+            if($user->getHighRoleCode() == User::CODE_ROLE_SUPER_ADMIN){
+                return new JsonResponse(['code' => 0, 'message' => '[ERREUR] Cet utilisateur ne peut pas être supprimé.']);
+            }
+            $em->remove($user); $em->flush();
+        }
+       
+        return new JsonResponse(['code' => 1]);
+    }
+
+    /**
     * @Route("/export/{format}", options={"expose"=true}, name="export")
     */
     public function export(Export $export, $format)
@@ -284,16 +309,13 @@ class UserController extends AbstractController
     {
         if($user == null){
             $user = new User();
-        }
-        
-        $user->setUsername($record->username);
-        $user->setEmail($record->email);
-
-        if($user == null){
             $user->setPassword($passwordEncoder->encodePassword(
                 $user, uniqid()
             ));
         }
+        
+        $user->setUsername($record->username);
+        $user->setEmail($record->email);
         return $user;
     }
 }

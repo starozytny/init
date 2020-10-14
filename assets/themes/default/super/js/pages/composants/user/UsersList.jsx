@@ -30,7 +30,7 @@ export class UsersList extends Component {
             return <div className="item-user" key={elem.id}>
                 <div className="item-user-actions">
                     <div className="user-selector">
-                        <Selector />
+                        {elem.highRoleCode != 1 ? <Selector identifiant={elem.id}/> : null}
                         {elem.highRoleCode != 0 ? <div className="item-user-roles"><div className={"user-badge user-badge-" + elem.highRoleCode}>{elem.highRole}</div></div> : null}
                     </div>
                     <div className="user-actions">

@@ -56,10 +56,11 @@ export class AsideImport extends Component {
         
         let self = this
         axios({ method: 'post', url: urlForm, data: fd, headers: {'Content-Type': 'multipart/form-data'} }).then(function (response) {
-            let data = response.data; let code = data.code; Loader.loader(false);
+            let data = response.data; let code = data.code;
             if (code === 1) {
                 location.reload()
             }else{
+                Loader.loader(false);
                 self.setState({error: data.message})
 
                 if(data.anomalies){

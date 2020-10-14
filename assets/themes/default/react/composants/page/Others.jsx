@@ -16,13 +16,13 @@ export class Others extends Component {
     }
 
     render () {
-        const {haveExport, urlExportExcel, urlExportCsv, nameExport, haveImport, asideImport, haveAllDelete} = this.props
+        const {haveExport, urlExportExcel, urlExportCsv, nameExport, haveImport, asideImport, haveAllDelete, onAllDelete} = this.props
 
         return <>
             <div className="others">
                 <div className="others-left">
                     <div className="title">Actions sur les sélectionnés : </div>
-                    {haveAllDelete ? <div className="others-item"><a className="btn"><span>Supprimer</span></a></div> : null}
+                    {haveAllDelete ? <div className="others-item"><button className="btn" onClick={onAllDelete}><span>Supprimer</span></button></div> : null}
                 </div>
                 <div className="others-right">
                     <div className="title">Actions globales : </div>

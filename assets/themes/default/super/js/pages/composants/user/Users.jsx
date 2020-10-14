@@ -6,6 +6,7 @@ import Loader from '../../../../../react/functions/loader';
 import ActionsArray from '../../../../../react/functions/actions_array';
 import {Page} from '../../../../../react/composants/page/Page';
 import {Aside} from '../../../../../react/composants/page/Aside';
+import {getSelector} from '../../../../../react/composants/page/Selector';
 import Swal from 'sweetalert2';
 import {AsideUser} from './AsideUser';
 import {AsideImport} from './AsideImport';
@@ -34,6 +35,7 @@ export class Users extends Component {
         this.handleOpenAside = this.handleOpenAside.bind(this)
         this.handleConvertIsNew = this.handleConvertIsNew.bind(this)
         this.handleDelete = this.handleDelete.bind(this)
+        this.handleAllDelete = this.handleAllDelete.bind(this)
         this.handleAdd = this.handleAdd.bind(this)
     }
 
@@ -106,7 +108,7 @@ export class Users extends Component {
             cancelButtonText: 'Annuler'
           }).then((result) => {
             if (result.value) {
-
+                Loader.loader(true)
                 let self = this
                 axios({ method: 'post', url: Routing.generate('super_users_user_delete', {'user': id}) }).then(function (response) {
                     let data = response.data; let code = data.code; Loader.loader(false)
@@ -126,6 +128,43 @@ export class Users extends Component {
                 });
             }
           })
+    }
+
+    handleAllDelete = (e) => {
+        let selectors = getSelector();
+
+        if(selectors.length != 0){
+            Swal.fire({
+                title: 'Etes-vous sûr ?',
+                text: "La suppression de tous les éléments sélectionnés sera définitive.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Oui, je confirme',
+                cancelButtonText: 'Annuler'
+              }).then((result) => {
+                if (result.value) {
+                    Loader.loader(true)
+                    let fd = new FormData();
+                    fd.append('selectors', selectors);
+                    let self = this
+                    axios({ method: 'post', url: Routing.generate('super_users_user_delete_all'), data: fd }).then(function (response) {
+                        let data = response.data; let code = data.code;
+    
+                        if(code === 1){
+                            location.reload();
+                            toastr.info('Suppression réussie.')
+                        }else{
+                            Loader.loader(false)
+                            toastr.error(data.message)
+                        }
+                    });
+                }
+              })
+        }else{
+            toastr.warning('Aucun élément séléctionné.')
+        }
+
+        
     }
 
     handleAdd = () => {
@@ -150,7 +189,7 @@ export class Users extends Component {
                   haveAdd="true" onAdd={this.handleAdd}
                   haveExport="true" nameExport="utilisateurs" urlExportExcel={Routing.generate('super_users_export', {'format': 'excel'})} urlExportCsv={Routing.generate('super_users_export', {'format': 'csv'})}
                   haveImport="true" asideImport={asideImport}
-                  haveAllDelete="true"
+                  haveAllDelete="true" onAllDelete={this.handleAllDelete}
                   />
             <Aside content={asideContent} ref={this.aside}/>
             
