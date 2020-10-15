@@ -40,7 +40,7 @@ export class RgpdList extends Component {
 
                 let bodyOpened = (cardOpened != null && cardOpened == elem.id) ? true : false;
     
-                return <div className={"card1 card1-" + bodyOpened} key={elem.id}>
+                return <div className={"card1 card1-" + bodyOpened + " card1-isSeen-" + elem.isSeen} key={elem.id}>
                     <div className="card1-header">
                         <div className="card1-header-title">
                             <div className="title">{elem.firstname}</div>

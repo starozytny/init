@@ -50,7 +50,7 @@ a.nav-item{
     margin-bottom: 10px;
     padding: 8px;
     border-radius: 8px;
-    display: inline-block;
+    @include flex(row, center, flex-start);
     font-size: 16px;
     color: $beta;
     opacity: 0.8;
@@ -73,8 +73,9 @@ a.nav-item{
     }
 }
 
-.nav-items-bottom{
-    width: calc(100% - 30px);
+.nav-items-bottom, .nav-items-top{
+    // width: calc(100% - 30px);
+    width: 100%;
 }
 //                      __   _____ __    ___    __
 //                     | _| |___  / /_  ( _ )  |_ |

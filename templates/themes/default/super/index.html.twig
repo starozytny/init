@@ -11,11 +11,11 @@
     <h1>Administrator</h1>
 
     <section class="dashboard">
-        <div class="dashboard-line dashboard-line-infos">
-            {% if haveSettings == false %}
+        {% if haveSettings == false %}
+            <div class="dashboard-line dashboard-line-infos">
                 <div id="settings-dashboard" class="settings-form"></div>
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
         <div class="dashboard-line dashboard-line-0">
             <a href="{{ path('super_users_index') }}" class="card-dash card-dash-0">
                 <div class="card-header">
