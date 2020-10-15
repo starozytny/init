@@ -131,7 +131,7 @@ export function DatePick({identifiant, valeur, onChange, children, minDate="", m
     return (<ClassiqueStructure valeur={valeur} identifiant={identifiant} content={content} label={children} classForm="form-group-date " />)
 }
 
-export function DateTimePick({identifiant, valeur, onChange, children, minDate="", maxDate="", format="dd/MM/yyyy", placeholder="DD/MM/YYYY", timeFormat="HH:mm", timeIntervals=15}){
+export function DateTimePick({identifiant, valeur, onChange, children, minDate="", maxDate="", format="dd/MM/yyyy HH:mm", placeholder="DD/MM/YYYY HH:MM", timeFormat="HH:mm", timeIntervals=15}){
     let content = <DatePicker
         locale="fr"
         id={identifiant}
