@@ -1,27 +1,28 @@
 import React from 'react';
 
-export function Alert({type, message, active, children}) {
+export function Alert({type, message, active, children, haveIcon=true}) {
     let icon;
-    switch (type){
-        case "danger":
-            icon = 'warning'
-            break;
-        case "success":
-            icon = 'check'
-            break;
-        case "warning":
-            icon = 'warning'
-            break;
-        case "info":
-            icon = 'information'
-            break;
-        case "question":
-            icon = 'question'
-            break;
-        default:
-            break;
+    if(haveIcon){
+        switch (type){
+            case "danger":
+                icon = 'warning'
+                break;
+            case "success":
+                icon = 'check'
+                break;
+            case "warning":
+                icon = 'warning'
+                break;
+            case "info":
+                icon = 'information'
+                break;
+            case "question":
+                icon = 'question'
+                break;
+            default:
+                break;
+        }
     }
-
 
     return (
         <div className={'alert alert-' + type + (active ? ' active' : '')}>
