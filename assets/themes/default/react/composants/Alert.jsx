@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function Alert({type, message, active}) {
+export function Alert({type, message, active, children}) {
     let icon;
     switch (type){
         case "danger":
@@ -24,7 +24,8 @@ export function Alert({type, message, active}) {
     return (
         <div className={'alert alert-' + type + (active ? ' active' : '')}>
             <span className={"icon-"+icon}></span>
-            <span>{message}</span>
+            {message ? <span>{message}</span> : null}
+            {children ? <p>{children}</p> : null}
         </div>
     );
 }
