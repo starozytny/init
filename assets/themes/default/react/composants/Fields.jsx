@@ -159,6 +159,31 @@ export function DatePick({valeur, onChange, children, minDate="", maxDate="", fo
     )
 }
 
+export function DateTimePick({valeur, onChange, children, minDate="", maxDate="", format="dd/MM/yyyy", placeholder="DD/MM/YYYY", timeFormat="HH:mm", timeIntervals=15}){
+    return (
+        <div className={'form-group-date form-group' + (valeur.error ? " form-group-error" : "")}>
+            <label>{children}</label>
+            <DatePicker
+                locale="fr"
+                selected={valeur.inputVal}
+                onChange={onChange}
+                dateFormat={format}
+                timeFormat={timeFormat}
+                timeIntervals={timeIntervals}
+                peekNextMonth
+                showMonthDropdown
+                showYearDropdown
+                showTimeSelect
+                dropdownMode="select"
+                placeholderText={placeholder}
+                minDate={minDate}
+                maxDate={maxDate}
+                />
+            <div className='error'>{valeur.error ? valeur.error : null}</div>
+        </div>
+    )
+}
+
 export function Switcher({identifiant, valeur, children, isChecked, onChange}){
     return (
         <div className={'form-group' + (valeur.error ? " form-group-error" : "")}>
