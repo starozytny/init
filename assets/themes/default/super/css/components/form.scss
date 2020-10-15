@@ -28,6 +28,10 @@ form{
     .form-group:not(:last-child){
         margin-bottom: 10px;
     }
+
+    & > .line:last-child{
+        margin-bottom: 0;
+    }
 }
 
 .line{

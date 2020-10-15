@@ -37,9 +37,20 @@ function deleteInArray(array, data){
     return arr;
 }
 
+function compareJsonInArray(bandA, bandB){
+    let comparison = 0;
+    if (bandA > bandB) {
+        comparison = 1;
+    } else if (bandA < bandB) {
+        comparison = -1;
+    }
+    return comparison;
+}
+
 module.exports = {
     updateInArray,
     updateInArraySeen,
     deleteInArray,
-    addOrUpdateInArray
+    addOrUpdateInArray,
+    compareJsonInArray
 }
