@@ -1,5 +1,4 @@
 import React from 'react';
-import Routing from '../../../../../public/bundles/fosjsrouting/js/router.min.js';
 import Trumbowyg from 'react-trumbowyg';
 import 'react-trumbowyg/dist/trumbowyg.min.css';
 import '../../../../../node_modules/trumbowyg/dist/plugins/base64/trumbowyg.base64';
@@ -18,13 +17,9 @@ registerLocale('fr', fr)
 import "react-datepicker/dist/react-datepicker.css";
 
 export function Input({type="text", identifiant, valeur, onChange, children, placeholder}) {
-    return (
-        <div className={'form-group' + (valeur.error ? " form-group-error" : "")}>
-            <label htmlFor={identifiant}>{children}</label>
-            <input type={type} name={identifiant} id={identifiant} placeholder={placeholder} value={valeur.value} onChange={onChange}/>
-            <div className="error">{valeur.error ? <><span className='icon-warning'></span>{valeur.error}</> : null}</div>
-        </div>
-    );
+    let content = <input type={type} name={identifiant} id={identifiant} placeholder={placeholder} value={valeur.value} onChange={onChange}/>
+
+    return (<ClassiqueStructure valeur={valeur} identifiant={identifiant} content={content} label={children} />)
 }
 
 export function Checkbox({items, name, valeur, onChange, children}) {
@@ -37,15 +32,9 @@ export function Checkbox({items, name, valeur, onChange, children}) {
         </div>
     })
 
-    return (
-        <div className={'form-group form-group-checkbox' + (valeur.error ? " form-group-error" : "")}>
-            <label>{children}</label>
-            <div className="checkbox-items">
-                {itemsInputs}
-            </div>
-            <div className="error">{valeur.error ? <><span className='icon-warning'></span>{valeur.error}</> : null}</div>
-        </div>
-    );
+    let content = <div className="checkbox-items">{itemsInputs}</div>
+
+    return (<ClassiqueStructure valeur={valeur} identifiant={identifiant} content={content} label={children} classForm="form-group-checkbox " />)
 }
 
 export function Radiobox({items, name, valeur, onChange, children}) {
@@ -58,66 +47,52 @@ export function Radiobox({items, name, valeur, onChange, children}) {
         </div>
     })
 
-    return (
-        <div className={'form-group form-group-radiobox' + (valeur.error ? " form-group-error" : "")}>
-            <label>{children}</label>
-            <div className="radiobox-items">
-                {itemsInputs}
-            </div>
-            <div className="error">{valeur.error ? <><span className='icon-warning'></span>{valeur.error}</> : null}</div>
-        </div>
-    );
+    let content = <div className="radiobox-items">{itemsInputs}</div>
+
+    return (<ClassiqueStructure valeur={valeur} identifiant={identifiant} content={content} label={children} classForm="form-group-radiobox " />)
 }
 
-export function TextArea({identifiant, valeur, onChange, children}) {
-    return (
-        <div className={'form-group' + (valeur.error ? " form-group-error" : "")}>
-            <label htmlFor={identifiant}>{children}</label>
-            <textarea name={identifiant} id={identifiant} value={valeur.value} rows="8" onChange={onChange}/>
-            <div className="error">{valeur.error ? <><span className='icon-warning'></span>{valeur.error}</> : null}</div>
-        </div>
-    );
+export function TextArea({identifiant, valeur, onChange, rows="8", children}) {
+    let content = <textarea name={identifiant} id={identifiant} value={valeur.value} rows={rows} onChange={onChange}/>
+
+    return (<ClassiqueStructure valeur={valeur} identifiant={identifiant} content={content} label={children} />)
 }
 
-export function TextAreaWys({identifiant, valeur, onChange, reference, children}){
-    return (
-        <div className={'form-group' + (valeur.error ? " form-group-error" : "")}>
-            <label htmlFor={identifiant}>{children}</label>
-            <Trumbowyg id='react-trumbowyg'
-                        buttons={
-                            [
-                                ['viewHTML'],
-                                ['historyUndo', 'historyRedo'],
-                                ['formatting'],
-                                ['fontsize'],
-                                'btnGrp-semantic',
-                                ['link'],
-                                ['insertImage'],
-                                ['upload'],
-                                ['base64'],
-                                ['foreColor', 'backColor'],
-                                'btnGrp-justify',
-                                'btnGrp-lists',
-                                ['horizontalRule'],
-                                ['alert'],
-                                ['fullscreen']
-                            ]
-                        }
-                        data={valeur.value}
-                        placeholder=''
-                        onChange={onChange}
-                        ref={reference}
-                        plugins= {{
-                            upload: {
-                                serverPath: Routing.generate('admin_doc_guide_upload'),
-								fileFieldName: 'image',
-                                urlPropertyName: 'data.link'
+export function TextAreaWys({identifiant, valeur, onChange, reference, url="", children}){
+    let content = <Trumbowyg id='react-trumbowyg'
+                            buttons={
+                                [
+                                    ['viewHTML'],
+                                    ['historyUndo', 'historyRedo'],
+                                    ['formatting'],
+                                    ['fontsize'],
+                                    'btnGrp-semantic',
+                                    ['link'],
+                                    ['insertImage'],
+                                    ['upload'],
+                                    ['base64'],
+                                    ['foreColor', 'backColor'],
+                                    'btnGrp-justify',
+                                    'btnGrp-lists',
+                                    ['horizontalRule'],
+                                    ['alert'],
+                                    ['fullscreen']
+                                ]
                             }
-                        }}
-                    />
-            <div className="error">{valeur.error ? <><span className='icon-warning'></span>{valeur.error}</> : null}</div>
-        </div>
-    );
+                            data={valeur.value}
+                            placeholder=''
+                            onChange={onChange}
+                            ref={reference}
+                            plugins= {{
+                                upload: {
+                                    serverPath: url,
+                                    fileFieldName: 'image',
+                                    urlPropertyName: 'data.link'
+                                }
+                            }}
+    />
+
+    return (<ClassiqueStructure valeur={valeur} identifiant={identifiant} content={content} label={children} />)
 }
 
 export function Select({identifiant, valeur, onChange, children, items}) {
@@ -132,71 +107,77 @@ export function Select({identifiant, valeur, onChange, children, items}) {
                     {choices}
                 </select>
             </label>
-            <div className="error">{valeur.error ? <><span className='icon-warning'></span>{valeur.error}</> : null}</div>            
+            <Error valeur={valeur}/>
         </div>
     );
 }
 
-export function DatePick({valeur, onChange, children, minDate="", maxDate="", format="dd/MM/yyyy", placeholder="DD/MM/YYYY"}){
-    return (
-        <div className={'form-group-date form-group' + (valeur.error ? " form-group-error" : "")}>
-            <label>{children}</label>
-            <DatePicker
-                locale="fr"
-                selected={valeur.inputVal}
-                onChange={onChange}
-                dateFormat={format}
-                peekNextMonth
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                placeholderText={placeholder}
-                minDate={minDate}
-                maxDate={maxDate}
-                />
-            <div className='error'>{valeur.error ? valeur.error : null}</div>
-        </div>
-    )
+export function DatePick({identifiant, valeur, onChange, children, minDate="", maxDate="", format="dd/MM/yyyy", placeholder="DD/MM/YYYY"}){
+    let content = <DatePicker
+        locale="fr"
+        id={identifiant}
+        selected={valeur.inputVal}
+        onChange={onChange}
+        dateFormat={format}
+        peekNextMonth
+        showMonthDropdown
+        showYearDropdown
+        dropdownMode="select"
+        placeholderText={placeholder}
+        minDate={minDate}
+        maxDate={maxDate}
+    />
+
+    return (<ClassiqueStructure valeur={valeur} identifiant={identifiant} content={content} label={children} classForm="form-group-date " />)
 }
 
-export function DateTimePick({valeur, onChange, children, minDate="", maxDate="", format="dd/MM/yyyy", placeholder="DD/MM/YYYY", timeFormat="HH:mm", timeIntervals=15}){
-    return (
-        <div className={'form-group-date form-group' + (valeur.error ? " form-group-error" : "")}>
-            <label>{children}</label>
-            <DatePicker
-                locale="fr"
-                selected={valeur.inputVal}
-                onChange={onChange}
-                dateFormat={format}
-                timeFormat={timeFormat}
-                timeIntervals={timeIntervals}
-                peekNextMonth
-                showMonthDropdown
-                showYearDropdown
-                showTimeSelect
-                dropdownMode="select"
-                placeholderText={placeholder}
-                minDate={minDate}
-                maxDate={maxDate}
-                />
-            <div className='error'>{valeur.error ? valeur.error : null}</div>
-        </div>
-    )
+export function DateTimePick({identifiant, valeur, onChange, children, minDate="", maxDate="", format="dd/MM/yyyy", placeholder="DD/MM/YYYY", timeFormat="HH:mm", timeIntervals=15}){
+    let content = <DatePicker
+        locale="fr"
+        id={identifiant}
+        selected={valeur.inputVal}
+        onChange={onChange}
+        dateFormat={format}
+        timeFormat={timeFormat}
+        timeIntervals={timeIntervals}
+        peekNextMonth
+        showMonthDropdown
+        showYearDropdown
+        showTimeSelect
+        dropdownMode="select"
+        placeholderText={placeholder}
+        minDate={minDate}
+        maxDate={maxDate}
+    />
+
+    return (<ClassiqueStructure valeur={valeur} identifiant={identifiant} content={content} label={children} classForm="form-group-date " />)
 }
 
 export function Switcher({identifiant, valeur, children, isChecked, onChange}){
+    let content = <div className="toggle-wrapper">
+        <div className="toggle checkcross">
+            <input id={identifiant} name={identifiant} checked={isChecked ? 'checked' : ''} className="input-checkcross" onChange={onChange} type="checkbox"/>
+            <label className="toggle-item" htmlFor={identifiant}>
+                <div className="check"></div>
+            </label>
+        </div>
+    </div>
+
+    return (<ClassiqueStructure valeur={valeur} identifiant={identifiant} content={content} label={children} />)
+}
+
+export function Error({valeur}){
     return (
-        <div className={'form-group' + (valeur.error ? " form-group-error" : "")}>
-            <label>{children}</label>
-            <div className="toggle-wrapper">
-                <div className="toggle checkcross">
-                    <input id={identifiant} name={identifiant} checked={isChecked ? 'checked' : ''} className="input-checkcross" onChange={onChange} type="checkbox"/>
-                    <label className="toggle-item" htmlFor={identifiant}>
-                        <div className="check"></div>
-                    </label>
-                </div>
-            </div>
-            <div className="error">{valeur.error ? <><span className='icon-warning'></span>{valeur.error}</> : null}</div>
+        <div className="error">{valeur.error ? <><span className='icon-warning'></span>{valeur.error}</> : null}</div>
+    )
+}
+
+export function ClassiqueStructure({valeur, identifiant, content, label, classForm=""}){
+    return (
+        <div className={classForm + 'form-group' + (valeur.error ? " form-group-error" : "")}>
+            <label htmlFor={identifiant}>{label}</label>
+            {content}
+            <Error valeur={valeur}/>
         </div>
     )
 }
