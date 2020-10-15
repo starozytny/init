@@ -19,12 +19,11 @@ export class UsersList extends Component {
         const {users} = this.props
 
         let items = users.map(elem => {
-
-            let impersonate = Routing.generate('super_users_index', {'_switch_user': elem.username})
+            let impersonate = Routing.generate('app_homepage', {'_switch_user': elem.username})
             if(elem.highRoleCode == 2){
                 impersonate = Routing.generate('admin_dashboard', {'_switch_user': elem.username})
-            }else if(elem.highRoleCode == 0){
-                impersonate = Routing.generate('app_homepage', {'_switch_user': elem.username})
+            }else if(elem.highRoleCode == 1){
+                impersonate = Routing.generate('super_users_index', {'_switch_user': elem.username})
             }
 
             return <div className="item-user" key={elem.id}>

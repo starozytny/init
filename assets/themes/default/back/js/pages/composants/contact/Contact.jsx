@@ -30,7 +30,7 @@ export class ContactList extends Component {
         const {demandes} = this.props
         const {cardOpened} = this.state
 
-        let items = <div class="alert alert-primary">Aucun enregistrement.</div>;
+        let items = <div className="alert alert-primary">Aucun enregistrement.</div>;
 
         if(demandes.length != 0){
             items = demandes.map(elem => {
