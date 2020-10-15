@@ -15,15 +15,17 @@ export function Alert({type, message, active, children}) {
         case "info":
             icon = 'information'
             break;
-        default:
+        case "question":
             icon = 'question'
+            break;
+        default:
             break;
     }
 
 
     return (
         <div className={'alert alert-' + type + (active ? ' active' : '')}>
-            <span className={"icon-"+icon}></span>
+            {icon ? <span className={"icon-"+icon}></span> : null}
             {message ? <span>{message}</span> : null}
             {children ? <p>{children}</p> : null}
         </div>

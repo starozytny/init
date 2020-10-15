@@ -1,7 +1,7 @@
 @import "../vars/vars.scss";
 
 .alert{
-    display: inline-block;
+    @include flex(row, flex-start, flex-start);
     margin: 15px 0;
     padding: 10px;
     font-size: 14px;
@@ -10,6 +10,7 @@
     [class^="icon-"]{
         display: inline-block;
         margin-right: 10px;
+        transform: translateY(2px);
     }
 }
 
