@@ -36,7 +36,6 @@ export class Users extends Component {
         this.handleConvertIsNew = this.handleConvertIsNew.bind(this)
         this.handleDelete = this.handleDelete.bind(this)
         this.handleAllDelete = this.handleAllDelete.bind(this)
-        this.handleAdd = this.handleAdd.bind(this)
     }
 
     handleUpdateList = (usersList) => { this.setState({ usersList: usersList })  }
@@ -49,19 +48,24 @@ export class Users extends Component {
         this.setState({ usersList: newList, users: newItems, tailleList: newItems.length })  
     }
 
-    handleOpenAside = (id) => { 
-        let user = this.state.usersImmuable.filter(v => v.id == id)
-        if(user.length != 0){
-            this.asideuser.current.handleUpdate(user[0])
-            this.aside.current.handleUpdate(user[0].username) 
+    handleOpenAside = (type, id) => { 
+        if(type == "edit"){
+            let user = this.state.usersImmuable.filter(v => v.id == id)
+            if(user.length != 0){
+                this.asideuser.current.handleOpen(type, user[0])
+                this.aside.current.handleUpdate("Modifier " + user[0].username) 
+            }else{
+                toastr.error('Cet utilisateur n\'existe pas.')
+            }
         }else{
-            toastr.error('Cet utilisateur n\'existe pas.')
+            this.asideuser.current.handleOpen(type, null)
+            this.aside.current.handleUpdate("Ajouter un utilisateur") 
         }
     }
 
     handleUpdateUser = (user) => { 
-        this.asideuser.current.handleUpdate(user)
-        this.aside.current.handleUpdate(user.username) 
+        this.asideuser.current.handleOpen("edit", user)
+        this.aside.current.handleUpdate("Modifier " + user.username) 
         
         this.setState({
             usersList: ActionsArray.updateInArray(this.state.usersList, user), 
@@ -163,13 +167,6 @@ export class Users extends Component {
         }else{
             toastr.warning('Aucun élément séléctionné.')
         }
-
-        
-    }
-
-    handleAdd = () => {
-        this.asideuser.current.handleOpenAdd()
-        this.aside.current.handleUpdate("Ajouter un utilisateur") 
     }
 
     render () {
@@ -186,7 +183,7 @@ export class Users extends Component {
             <Page content={content} 
                   havePagination="true" taille={tailleList} itemsPagination={users} perPage="12" onUpdate={this.handleUpdateList}
                   haveSearch="true" onSearch={this.handleSearch}
-                  haveAdd="true" onAdd={this.handleAdd}
+                  haveAdd="true" onAdd={() => this.handleOpenAside("add", null)}
                   haveExport="true" nameExport="utilisateurs" urlExportExcel={Routing.generate('super_users_export', {'format': 'excel'})} urlExportCsv={Routing.generate('super_users_export', {'format': 'csv'})}
                   haveImport="true" asideImport={asideImport}
                   haveAllDelete="true" onAllDelete={this.handleAllDelete}

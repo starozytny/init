@@ -3,20 +3,8 @@ import Routing from '../../../../../../../../public/bundles/fosjsrouting/js/rout
 import {Selector} from '../../../../../react/composants/page/Selector';
 
 export class UsersList extends Component {
-    constructor (props) {
-        super()
-        
-        this.handleOpenAside = this.handleOpenAside.bind(this)
-        this.handleConvert = this.handleConvert.bind(this)
-        this.handleDelete = this.handleDelete.bind(this)
-    }
-
-    handleOpenAside = (e) => { this.props.onOpenAside(e.currentTarget.dataset.id) }
-    handleConvert = (e) => { this.props.onConvertIsNew(e.currentTarget.dataset.id) }
-    handleDelete = (e) => { this.props.onDelete(e.currentTarget.dataset.id) }
-
     render () {
-        const {users} = this.props
+        const {users, onOpenAside, onConvertIsNew, onDelete} = this.props
 
         let items = users.map(elem => {
             let impersonate = Routing.generate('app_homepage', {'_switch_user': elem.username})
@@ -36,19 +24,19 @@ export class UsersList extends Component {
                         <span className="icon-more"></span>
                         <div className="user-actions-drop">
                             <div className="drop-items">
-                                <span className="drop-item" onClick={this.handleOpenAside} data-id={elem.id}>Modifier</span>
-                                {elem.highRoleCode != 1 ? <span className="drop-item" onClick={this.handleDelete} data-id={elem.id}>Supprimer</span> : null}
+                                <span className="drop-item" onClick={() => onOpenAside("edit", elem.id)}>Modifier</span>
+                                {elem.highRoleCode != 1 ? <span className="drop-item" onClick={() => onDelete(elem.id)}>Supprimer</span> : null}
                                 <a className="drop-item" href={impersonate}>Impersonate</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="item-user-avatar" onClick={this.handleOpenAside} data-id={elem.id}>
+                <div className="item-user-avatar" onClick={() => onOpenAside("edit", elem.id)}>
                     <img src={"../../uploads/" + elem.avatar} alt={"avatar de " + elem.username} />
                 </div>
                 <div className="item-user-username">
-                    {elem.isNew ? <><div className="user-new btn-icon" onClick={this.handleConvert} data-id={elem.id}><span className="icon-unlock"></span><span className="icon-padlock"></span><span className="tooltip">Débloquer</span></div></> : null}          
-                    <span onClick={this.handleOpenAside} data-id={elem.id}>{elem.username}</span>
+                    {elem.isNew ? <><div className="user-new btn-icon" onClick={() => onConvertIsNew(elem.id)}><span className="icon-unlock"></span><span className="icon-padlock"></span><span className="tooltip">Débloquer</span></div></> : null}          
+                    <span onClick={() => onOpenAside("edit", elem.id)}>{elem.username}</span>
                 </div>
                 <div className="item-user-email">{elem.email}</div>   
             </div>

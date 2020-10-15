@@ -16,6 +16,8 @@ export class AsideUser extends Component {
         this.state = {
             type: 'edit',
             error: '',
+            user: undefined,
+            users: props.users,
             username: {value: '', error: ''},
             email: {value: '', error: ''},
             roles: {value: [], error:''},
@@ -24,33 +26,29 @@ export class AsideUser extends Component {
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         
-        this.handleUpdate = this.handleUpdate.bind(this)
         this.handleGetFile = this.handleGetFile.bind(this)
 
-        this.handleOpenAdd = this.handleOpenAdd.bind(this)
+        this.handleOpen = this.handleOpen.bind(this)
     }
 
-    handleUpdate = (user) => {
-        this.setState({
-            type: 'edit',
-            user: user,
-            users: this.props.users,
-            username: {value: user.username, error:''},
-            email: {value: user.email, error:''},
-            roles: {value: user.roles, error:''}
-        })
+    handleOpen = (type, user) => {
+        if(type == "edit"){
+            this.setState({
+                type: type,
+                user: user,
+                username: {value: user.username, error:''},
+                email: {value: user.email, error:''},
+                roles: {value: user.roles, error:''}
+            })
+        }else{
+            this.setState({
+                type: type,
+                username: {value: "", error:''},
+                email: {value: "", error:''},
+                roles: {value: [], error:''}
+            }) 
+        }
         document.getElementById("username").focus();
-    }
-
-    handleOpenAdd = () => { 
-        this.setState({
-            type: 'add',
-            user: undefined,
-            users: this.props.users,
-            username: {value: "", error:''},
-            email: {value: "", error:''},
-            roles: {value: [], error:''}
-        }) 
     }
 
     handleChange = (e) => { 
@@ -125,7 +123,6 @@ export class AsideUser extends Component {
                 }
             });
         }
-
     }
 
     render () {
@@ -145,7 +142,7 @@ export class AsideUser extends Component {
             })
         }
 
-        let infos = null, title = null, btnText = null;
+        let infos = null, title = null, btnText = "Ajouter";
 
         if(type === 'edit'){
             btnText = "Mettre à jour"
@@ -155,14 +152,12 @@ export class AsideUser extends Component {
                 <div>Créé le {user.createAtString}</div>
                 <div>Renouvellement du mot de passe le {user.renouvTimeString}</div>
             </div>
-        }else{
-            btnText = "Ajouter"
         }
 
         return <>
             {infos}
             <form className={"aside-user-form aside-user-form-" + type} onSubmit={this.handleSubmit}>
-                <span className="form-title">{title}</span>
+                {title ? <span className="form-title">{title}</span> : null}
                 {error != '' ? <Alert type="danger" message={error} active="true" /> : null}
                 <div className="line line-2">
                     <Input identifiant="username" valeur={username} onChange={this.handleChange}>Nom d'utilisateur</Input>
@@ -175,7 +170,7 @@ export class AsideUser extends Component {
                     <label>Avatar</label>
                     <div className="form-files">
                         {user === undefined ? null : <div className="form-avatar"><img src={'../../uploads/' + user.avatar} alt="Avatar actuel de l'utilisateur"/></div>}
-                        <Drop label="Téléverser un nouvel avatar" labelError="Seul les images sont acceptées."
+                        <Drop label="Téléverser un avatar" labelError="Seules les images sont acceptées."
                               accept={"image/*"} maxFiles={1} onGetFile={this.handleGetFile}/>
                     </div>
                 </div>
