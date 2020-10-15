@@ -7,11 +7,17 @@ export function Alert({type, message, active}) {
             icon = 'warning'
             break;
         case "success":
+            icon = 'check'
+            break;
+        case "warning":
+            icon = 'warning'
+            break;
+        case "info":
             icon = 'information'
             break;
         default:
             icon = 'question'
-            return <div></div>
+            break;
     }
 
 
