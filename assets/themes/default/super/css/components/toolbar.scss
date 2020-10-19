@@ -47,7 +47,7 @@
                 margin-bottom: 0;
             }
 
-            .toolbar-item:not(:last-child) > .btn{
+            .toolbar-item:not(:last-child){
                 margin-right: 12px;
             }
         }
