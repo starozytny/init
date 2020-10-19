@@ -43,6 +43,7 @@ export class AsideUser extends Component {
         }else{
             this.setState({
                 type: type,
+                user: undefined,
                 username: {value: "", error:''},
                 email: {value: "", error:''},
                 roles: {value: [], error:''}
