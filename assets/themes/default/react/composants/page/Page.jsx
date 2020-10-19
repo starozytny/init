@@ -19,7 +19,7 @@ export class Page extends Component {
         } = this.props
 
         return <>
-            {infos}
+            <div className="page-infos">{infos}</div>
             <Toolbar haveSearch={haveSearch} onSearch={onSearch} haveAdd={haveAdd} onAdd={onAdd}/>
             {content}
             {havePagination ? <Pagination perPage={perPage} taille={taille} items={itemsPagination} onUpdate={(items) => this.props.onUpdate(items)}/> : null}
