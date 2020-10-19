@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function Alert({type, message, active, children, haveIcon=true}) {
+export function Alert({type, message, active=true, children, haveIcon=true}) {
     let icon;
     if(haveIcon){
         switch (type){
