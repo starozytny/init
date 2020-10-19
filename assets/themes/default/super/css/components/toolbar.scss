@@ -9,6 +9,14 @@
     .toolbar-left + .toolbar-right{
         margin-top: 10px;
     }
+
+    button.btn{
+        width: 100%;
+    }
+
+    .toolbar-item:not(:last-child) > .btn{
+        margin-bottom: 0;
+    }
 }
 
 .toolbar{
@@ -27,5 +35,21 @@
 @media (min-width:768px) {
     .toolbar{
         @include flex(row, center, space-between);
+
+        .toolbar-left, .toolbar-right{
+            width: 50%;
+        }
+
+        .toolbar-left{
+            @include flex(row, center, flex-start);
+
+            .toolbar-item > .btn{
+                margin-bottom: 0;
+            }
+
+            .toolbar-item:not(:last-child) > .btn{
+                margin-right: 12px;
+            }
+        }
     }
 }
