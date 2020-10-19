@@ -9,7 +9,7 @@ export class Page extends Component {
     }
 
     render () {
-        const {content, 
+        const {infos, content, 
             havePagination, perPage, taille, itemsPagination, 
             haveSearch, onSearch,
             haveAdd, onAdd,
@@ -19,6 +19,7 @@ export class Page extends Component {
         } = this.props
 
         return <>
+            {infos}
             <Toolbar haveSearch={haveSearch} onSearch={onSearch} haveAdd={haveAdd} onAdd={onAdd}/>
             {content}
             {havePagination ? <Pagination perPage={perPage} taille={taille} items={itemsPagination} onUpdate={(items) => this.props.onUpdate(items)}/> : null}
