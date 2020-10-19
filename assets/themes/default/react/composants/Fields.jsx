@@ -99,17 +99,10 @@ export function Select({identifiant, valeur, onChange, children, items}) {
     let choices = items.map((item) => 
         <option key={item.value} value={item.value}>{item.libelle}</option>
     )
-    return (
-        <div className={'form-group' + (valeur.error ? " form-group-error" : "")}>
-            <label>
-                {children}
-                <select value={valeur.value} id={identifiant} name={identifiant} onChange={onChange}>
-                    {choices}
-                </select>
-            </label>
-            <Error valeur={valeur}/>
-        </div>
-    );
+
+    let content = <select value={valeur.value} id={identifiant} name={identifiant} onChange={onChange}> {choices} </select>
+
+    return (<ClassiqueStructure valeur={valeur} identifiant={identifiant} content={content} label={children} />)
 }
 
 export function DatePick({identifiant, valeur, onChange, children, minDate="", maxDate="", format="dd/MM/yyyy", placeholder="DD/MM/YYYY"}){

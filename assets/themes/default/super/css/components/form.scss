@@ -44,7 +44,7 @@ form{
     }
 }
 
-input, textarea{
+input, textarea, select{
     border: 1px solid $color5;
     padding: 8px 10px;
     border-radius: 3px;
@@ -56,6 +56,11 @@ input, textarea{
         border: 1px solid transparentize($color: $color0, $amount: .7);
     }
 }
+
+select{
+    padding: 6.5px 10px;
+}
+
 .checkbox-items, .radiobox-items{
     @include flex(row, stretch, flex-start);
     flex-wrap: wrap;
