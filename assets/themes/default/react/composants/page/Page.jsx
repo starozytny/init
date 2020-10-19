@@ -11,6 +11,7 @@ export class Page extends Component {
     render () {
         const {infos, content, 
             havePagination, perPage, taille, itemsPagination, 
+            haveBack, hrefBack, txtBack,
             haveSearch, onSearch,
             haveAdd, onAdd,
             haveExport, urlExportExcel, urlExportCsv, nameExport,
@@ -20,7 +21,7 @@ export class Page extends Component {
 
         return <>
             <div className="page-infos">{infos}</div>
-            <Toolbar haveSearch={haveSearch} onSearch={onSearch} haveAdd={haveAdd} onAdd={onAdd}/>
+            <Toolbar haveBack={haveBack} hrefBack={hrefBack} txtBack={txtBack} haveSearch={haveSearch} onSearch={onSearch} haveAdd={haveAdd} onAdd={onAdd}/>
             {content}
             {havePagination ? <Pagination perPage={perPage} taille={taille} items={itemsPagination} onUpdate={(items) => this.props.onUpdate(items)}/> : null}
             <Others haveExport={haveExport} urlExportExcel={urlExportExcel} urlExportCsv={urlExportCsv} nameExport={nameExport} 
