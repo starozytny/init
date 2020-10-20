@@ -4,9 +4,11 @@
 
 @import "components/cookies.scss";
 @import "components/loader.scss";
+@import "components/menu.scss";
+@import "components/footer.scss";
 
 body {
-    background-color: lightgray;
+    background-color: $colorFond;
     @include fontRegular();
     line-height: 1.37;
 }
@@ -18,4 +20,9 @@ h1, h2, h3, h4, p{
 a{
     text-decoration: none;
     transition: all 0.2s ease-in-out;
+}
+
+main{
+    @include maxscreen();
+    padding: 50px 0;
 }
