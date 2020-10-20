@@ -58,7 +58,7 @@ a.btn{
         position: absolute;
         top: -30px;
         right: 0;
-        background-color: rgba(var(--beta), 0.3);
+        background-color: rgba(var(--betaRGBA), 0.7);
         color: var(--alpha);
         padding: 2px 6px;
         border-radius: 4px 4px 0 4px;
@@ -87,20 +87,20 @@ a.btn{
 }
 
 $types:
-    "primary" var(--alpga) var(--primary),
-    "warning" var(--alpga) var(--warning),
-    "danger" var(--alpga) var(--danger);
+    "primary" var(--alpha) var(--primary) var(--primaryRGBA),
+    "warning" var(--alpha) var(--warning) var(--warningRGBA),
+    "danger" var(--alpha) var(--danger) var(--dangerRGBA);
 
-@each $name, $txtColor, $mainColor in $types{
+@each $name, $txtColor, $mainColor, $shadowColor in $types{
     .btn-#{$name}{
         color: $txtColor;
         background-color: $mainColor;
         border-color: $mainColor;
-        box-shadow: 0 0 15px rgba($mainColor, 0.8);
+        box-shadow: 0 0 15px rgba($shadowColor, 0.25);
     
         &:hover, &:focus{
             opacity: 0.95;
-            box-shadow: 0 0 15px rgba($mainColor, 0.6);
+            box-shadow: 0 0 15px rgba($shadowColor, 0.4);
         }
     }
 }

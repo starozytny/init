@@ -53,7 +53,7 @@ input, textarea, select{
     outline: none;
 
     &:focus{
-        border: 1px solid rgba(var(--color0), 0.7);
+        border: 1px solid rgba(var(--color0RGBA), 0.3);
     }
 }
 
@@ -167,7 +167,7 @@ select{
 
     label.toggle-item {
         width: 4em;
-        background: rgba(var(--color0), 0.85);
+        background: rgba(var(--color0RGBA), 0.25);
         height: 2em;
         display: inline-block;
         border-radius: 50px;

@@ -15,15 +15,15 @@
 }
 
 $types:
-    "danger" var(--danger),
-    "primary" var(--primary),
-    "info" var(--primary),
-    "warning" var(--warning),
-    "success" var(--success);
+    "danger" var(--danger) var(--dangerRGBA),
+    "primary" var(--primary) var(--primaryRGBA),
+    "info" var(--primary) var(--primaryRGBA),
+    "warning" var(--warning) var(--warningRGBA),
+    "success" var(--success) var(--successRGBA);
 
-@each $name, $color in $types{
+@each $name, $color, $shadowColor in $types{
     .alert-#{$name}{
-        background-color: rgba($color, 0.89);
+        background-color: rgba($shadowColor, 0.89);
         color: $color;
     }
 }

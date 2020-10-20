@@ -32,8 +32,6 @@
     outline-color: var(--color1);
 
     &:hover{
-        background-color: rgba(var(--color1), 0.7);
-    }
-
-    
+        background-color: rgba(var(--color1RGBA), 0.3);
+    }    
 }
