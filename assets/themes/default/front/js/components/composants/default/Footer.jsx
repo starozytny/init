@@ -14,10 +14,10 @@ export class Footer extends Component {
                             <span>Site internet</span>
                         </div>
                         <div className="footer-items">
-                            <a href={Routing.generate('app_mentions')}>Mentions légales</a>
-                            <a href={Routing.generate('app_politique')}>Politique de confidentialité</a>
-                            <a href={Routing.generate('app_cookies')}>Gestion des cookies</a>
-                            <a href={Routing.generate('app_login')}>Espace client</a>
+                            <a rel="nofollow" href={Routing.generate('app_mentions')}>Mentions légales</a>
+                            <a rel="nofollow" href={Routing.generate('app_politique')}>Politique de confidentialité</a>
+                            <a rel="nofollow" href={Routing.generate('app_cookies')}>Gestion des cookies</a>
+                            <a rel="nofollow" href={Routing.generate('app_login')}>Espace client</a>
                         </div>
                     </div>
                     <div className="copyright">Copyright © 2020 - <a href={Routing.generate('app_homepage')}>Logilink</a></div>
