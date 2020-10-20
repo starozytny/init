@@ -1,7 +1,7 @@
 @import "../vars/vars.scss";
 
 .alert{
-    @include flex(row, flex-start, flex-start);
+    display: none;
     margin: 15px 0;
     padding: 10px;
     font-size: 14px;
@@ -14,6 +14,10 @@
     }
 }
 
+.alert.active{
+    @include flex(row, flex-start, flex-start);
+}
+
 $types:
     "danger" var(--danger) var(--dangerRGBA),
     "primary" var(--primary) var(--primaryRGBA),
@@ -23,7 +27,7 @@ $types:
 
 @each $name, $color, $shadowColor in $types{
     .alert-#{$name}{
-        background-color: rgba($shadowColor, 0.89);
+        background-color: rgba($shadowColor, 0.29);
         color: $color;
     }
 }
