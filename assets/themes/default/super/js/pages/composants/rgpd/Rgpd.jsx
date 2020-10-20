@@ -34,7 +34,7 @@ export class RgpdList extends Component {
                 let bodyOpened = (cardOpened != null && cardOpened == elem.id) ? true : false;
 
                 return <div className={"card-2 card-2-opened-" + bodyOpened + " card-2-isSeen-" + elem.isSeen} key={elem.id}>
-                    <div className="card-2-header">
+                    <div className="card-2-header" onClick={e => this.handleClick(elem.id, elem.isSeen)}>
                         <div className="title">{elem.firstname}</div>
                         <div className="subtitle">{elem.email}</div>
                     </div>
