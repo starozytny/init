@@ -4,7 +4,7 @@
     padding-bottom: 25px;
     margin-top: 25px;
     margin-bottom: 25px;
-    border-bottom: 1px solid $color5;
+    border-bottom: 1px solid var(--color5);
 
     .toolbar-left + .toolbar-right{
         margin-top: 10px;
@@ -22,7 +22,7 @@
 .toolbar{
     input[type="search"]{
         width: 100%;
-        outline-color: $alpha;
+        outline-color: var(--alpha);
     }
 }
 

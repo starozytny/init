@@ -1,4 +1,42 @@
 @import "~normalize.css";
+
+:root{
+    --color0: #2B96D6;
+    --color1: #FEC61F;
+    --color2: #103044;
+    --color3: #15120D;
+    --color4: #F1ECEC;
+    --color5: #FDFCFC;
+    --color6: #676767;
+
+    --colorDisabled: #BCC0BC;
+
+    --nuance0: #ffcbf2;
+    --nuance1: #deaaff;
+    --nuance2: #c8e7ff;
+
+    --nuanceColor4: #d1c169;
+
+    --colorFond: #F9F9F9;
+    --alpha: #fff;
+    --beta: #000;
+
+    --primary:#5b3cc4;
+    --primary-bg: #9ff0ff;
+    --success: rgb(23, 201, 100);
+    --success-bg: #83ffc5;
+    --danger: rgb(242, 19, 93);
+    --danger-bg: #ffb9b9;
+    --warning: rgb(255, 130, 0);
+    --dark: rgb(36, 33, 69);
+
+    --colorBorder: #bcc0bc75;
+}
+
+// .dark-mode {
+//     --color0: blue;
+// }
+
 @import "vars/fonts.scss";
 @import "vars/vars.scss";
 
@@ -8,7 +46,7 @@
 @import "components/footer.scss";
 
 body {
-    background-color: $colorFond;
+    background-color: var(--colorFond);
     @include fontRegular();
     line-height: 1.37;
 }

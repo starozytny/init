@@ -2,7 +2,7 @@
 
 nav{
     width: 85%;
-    background-color: $alpha;
+    background-color: var(--alpha);
     height: 100vh;
     position: fixed;
     top: 0; left: 0;
@@ -24,13 +24,13 @@ nav{
 
     a{
         @include fontBold();
-        color: $color0;
+        color: var(--color0);
         font-size: 24px;
     }
 
     [class^="icon-"]{
         font-weight: bold;
-        color: $color3;
+        color: var(--color3);
     }
 }
 
@@ -52,7 +52,7 @@ a.nav-item{
     border-radius: 8px;
     @include flex(row, center, flex-start);
     font-size: 16px;
-    color: $beta;
+    color: var(--beta);
     opacity: 0.8;
     transition: all 0.2s ease-in-out;
 
@@ -67,8 +67,8 @@ a.nav-item{
     }
 
     &.active{
-        background-color: $color0;
-        color: $color2;
+        background-color: var(--color0);
+        color: var(--color2);
         opacity: 1;
     }
 }

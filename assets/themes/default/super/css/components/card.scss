@@ -4,10 +4,10 @@
 @import "split/card/carddash.scss";
 
 .card{
-    border: 1px solid $colorBorder;
+    border: 1px solid var(--colorBorder);
     padding: 16px 12px;
     border-radius: 5px;
-    background-color: $alpha;
+    background-color: var(--alpha);
     @include boxshadow();
     margin-bottom: 12px;
 

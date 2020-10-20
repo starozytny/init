@@ -15,36 +15,5 @@
 
 
 @mixin boxshadow(){
-  box-shadow: 0 0 10px transparentize($color: $color3, $amount: 0.9);
+  box-shadow: 0 0 10px transparentize($color: #15120D, $amount: 0.9);
 }
-
-$color0: #2B96D6;
-$color1: #FEC61F;
-$color2: #103044;
-$color3: #15120D;
-$color4: #F1ECEC;
-$color5: #FDFCFC;
-$color6: #676767;
-$color7: #C6C3C3;
-$color8: #DFDDDD;
-
-$error: #d40d0e;
-$errorBg: #ffb9b9;
-$success: #169f50;
-$successBg: #83ffc5;
-$info: #405fb5;
-$infoBg: #9ff0ff;
-
-$colorDisabled: #BCC0BC;
-$colorFond: #F9F9F9;
-$alpha: #fff;
-$beta: #000;
-$txtBlack: #000;
-
-$primary:#5b3cc4;
-$success: rgb(23, 201, 100);
-$danger: rgb(242, 19, 93);
-$warning: rgb(255, 130, 0);
-$dark: rgb(36, 33, 69);
-
-$colorBorder: #bcc0bc75;

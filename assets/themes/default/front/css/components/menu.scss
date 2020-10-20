@@ -1,13 +1,13 @@
 @import "../vars/vars.scss";
 
 .navigation{
-    background-color: $alpha;
+    background-color: var(--alpha);
 }
 
 nav{
     &.active{
         .nav-header, .nav-body{
-            background-color: $colorFond;
+            background-color: var(--colorFond);
             z-index: 20;
         }
         .nav-header{
@@ -38,14 +38,14 @@ nav{
 
         [class^="icon-"]{ 
             padding: 12px;
-            color: $color3;
+            color: var(--color3);
             font-weight: bold;
          }
 
         .icon-menu{ 
             display: block; 
-            background-color: $color0;
-            color: $txtBlack;
+            background-color: var(--color0);
+            color: var(--beta);
          }
         .icon-cancel{ display: none; }
     }
@@ -72,7 +72,7 @@ nav{
     .nav-item{
         padding: 5px 12px;
         text-transform: uppercase;
-        color: $color3;
+        color: var(--color3);
         opacity: 0.7;
         transition: all 0.2s ease-in-out;
         padding-bottom: 12px;
@@ -86,7 +86,7 @@ nav{
     .nav-items-active{
         position: absolute;
         bottom: 0; left: 0;
-        background-color: $color3;
+        background-color: var(--color3);
         width: 0;
         height: 1px;
         display: block;

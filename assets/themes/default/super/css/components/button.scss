@@ -2,15 +2,15 @@
 
 .btn{
     display: inline-block;
-    border: 1px solid $color5;
+    border: 1px solid var(--color5);
     text-transform: uppercase;
     padding: 10px 22px;
     margin: 10px 0;
     border-radius: 5px;
     cursor: pointer;
-    background-color: $alpha;
+    background-color: var(--alpha);
     outline: none;
-    color: $color0;
+    color: var(--color0);
     transition: all 0.2s ease-in-out;
 
     span{
@@ -58,8 +58,8 @@ a.btn{
         position: absolute;
         top: -30px;
         right: 0;
-        background-color: transparentize($color: $beta, $amount: 0.3);
-        color:$alpha;
+        background-color: rgba(var(--beta), 0.3);
+        color: var(--alpha);
         padding: 2px 6px;
         border-radius: 4px 4px 0 4px;
         transform: scale(0);
@@ -87,20 +87,20 @@ a.btn{
 }
 
 $types:
-    "primary" $alpha $primary,
-    "warning" $alpha $warning,
-    "danger" $alpha $danger;
+    "primary" var(--alpga) var(--primary),
+    "warning" var(--alpga) var(--warning),
+    "danger" var(--alpga) var(--danger);
 
 @each $name, $txtColor, $mainColor in $types{
     .btn-#{$name}{
         color: $txtColor;
         background-color: $mainColor;
         border-color: $mainColor;
-        box-shadow: 0 0 15px transparentize($color: $mainColor, $amount: 0.8);
+        box-shadow: 0 0 15px rgba($mainColor, 0.8);
     
         &:hover, &:focus{
             opacity: 0.95;
-            box-shadow: 0 0 15px transparentize($color: $mainColor, $amount: 0.6);
+            box-shadow: 0 0 15px rgba($mainColor, 0.6);
         }
     }
 }

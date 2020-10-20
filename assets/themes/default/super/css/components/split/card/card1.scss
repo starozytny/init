@@ -1,10 +1,10 @@
 @import "../../../vars/vars.scss";
 
 .card1{
-    border: 1px solid $colorBorder;
+    border: 1px solid var(--colorBorder);
     padding: 16px 12px;
     border-radius: 5px;
-    background-color: $alpha;
+    background-color: var(--alpha);
     @include boxshadow();
     transition: all 0.2s ease;
 
@@ -65,35 +65,16 @@
     .card1-body{
         overflow-y: auto;
         max-height: 150px;
-        border-top: 1px solid $colorBorder;
+        border-top: 1px solid var(--colorBorder);
         padding-top: 12px;
         transition: all 0.2s ease-in-out;
-
-        /* width */
-        &::-webkit-scrollbar {
-            width: 6px;
-        }
-        
-        /* Track */
-        &::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        
-        /* Handle */
-        &::-webkit-scrollbar-thumb {
-            background: #888;
-        }
-        
-        /* Handle on hover */
-        &::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
+        @include scrollbar()
     }    
 
     .card1-footer{
         margin-top: 8px;
         @include flex(row, flex-end, space-between);
-        border-top: 1px solid $colorBorder;
+        border-top: 1px solid var(--colorBorder);
         padding-top: 16px;
 
         .card1-footer-left, .card1-footer-right{

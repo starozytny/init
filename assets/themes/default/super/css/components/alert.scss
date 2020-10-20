@@ -14,24 +14,18 @@
     }
 }
 
-.alert-danger{
-    background-color: transparentize($color: $error, $amount: 0.89);
-    color: $error;
-}
+$types:
+    "danger" var(--danger),
+    "primary" var(--primary),
+    "info" var(--primary),
+    "warning" var(--warning),
+    "success" var(--success);
 
-.alert-primary, .alert-info{
-    background-color: transparentize($color: $primary, $amount: 0.89);
-    color: $primary;
-}
-
-.alert-warning{
-    background-color: transparentize($color: $warning, $amount: 0.89);
-    color: $warning;
-}
-
-.alert-success{
-    background-color: transparentize($color: $success, $amount: 0.89);
-    color: $success;
+@each $name, $color in $types{
+    .alert-#{$name}{
+        background-color: rgba($color, 0.89);
+        color: $color;
+    }
 }
 
 .alert-color{

@@ -1,4 +1,43 @@
 @import "~normalize.css";
+
+:root{
+    --color0: #1A535C;
+    --color1: #4ECDC4;
+    --color2: #F7FFF7;
+    --color3: #FF6B6B;
+    --color4: #E7CF56;
+    --color5: #dddddd;
+    --color6: #5D5D5D;
+
+    --colorDisabled: #BCC0BC;
+
+    --nuance0: #ffcbf2;
+    --nuance1: #deaaff;
+    --nuance2: #c8e7ff;
+
+    --nuanceColor4: #d1c169;
+
+    --colorFond: #F9F9F9;
+    --alpha: #fff;
+    --beta: #000;
+
+    --primary:#5b3cc4;
+    --primary-bg: #9ff0ff;
+    --success: rgb(23, 201, 100);
+    --success-bg: #83ffc5;
+    --danger: rgb(242, 19, 93);
+    --danger-bg: #ffb9b9;
+    --warning: rgb(255, 130, 0);
+    --dark: rgb(36, 33, 69);
+
+    --colorBorder: #bcc0bc75;
+}
+
+// .dark-mode {
+//     --color0: blue;
+// }
+
+
 @import "vars/fonts.scss";
 @import "vars/vars.scss";
 
@@ -20,18 +59,9 @@
 @import "components/footer.scss";
 @import "components/card.scss";
 
-// :root{
-//     --main-bg-color: red;
-// }
-
-// .dark-mode {
-//     --main-bg-color: blue;
-// }
-
 body {
     @include fontRegular();
-    background-color: $colorFond;
-    // background-color: var(--main-bg-color);
+    background-color: var(--colorFond);
     line-height: 1.37;
 }
 
@@ -50,7 +80,7 @@ a{
 }
 
 .overlay{
-    background-color: transparentize($color: $color0, $amount: 0.7);
+    background-color: rgba(var(--color0), 0.7);
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
@@ -70,7 +100,7 @@ main{
 }
 
 .swal2-styled.swal2-confirm{
-    background-color: $primary !important;
+    background-color: var(--primary) !important;
 }
 
 .dashboard-line{
@@ -94,10 +124,10 @@ main{
     }
 }
 
-.txt-danger{ color: $danger; }
-.txt-primary{ color: $primary; }
-.txt-warning{ color: $warning; }
-.txt-alpha{ color: $alpha; }
+.txt-danger{ color: var(--danger); }
+.txt-primary{ color: var(--priamry); }
+.txt-warning{ color: var(--warning); }
+.txt-alpha{ color: var(--alpha); }
 
 //                      __   _____ __    ___    __
 //                     | _| |___  / /_  ( _ )  |_ |

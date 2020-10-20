@@ -3,16 +3,16 @@
 .footer{
     padding: 62px 0 42px 0;
     margin: 62px 12px 0 12px;
-    border-top: 1px solid $color8;
+    border-top: 1px solid var(--color6);
 
     .footer-logo{
         @include flex(column, flex-start, flex-start);
         margin-bottom: 25px;
         @include fontSemibold();
-        color: $txtBlack;
+        color: var(--beta);
 
         a{
-            color: $txtBlack;
+            color: var(--beta);
         }
         
         img{
@@ -27,7 +27,7 @@
         margin-bottom: 25px;
 
         a{
-            color: $color3;
+            color: var(--color3);
             opacity: 0.7;
 
             &:hover{
@@ -40,7 +40,7 @@
         }
     }
     .copyright{
-        color: $txtBlack;
+        color: var(--black);
         opacity: 0.7;
     }
 }
