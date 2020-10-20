@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/espace-utilisateur", options={"expose"=true}, name="user_dashboard")
+     * @Route("/espace-utilisateur", name="user_dashboard")
      */
     public function index()
     {
