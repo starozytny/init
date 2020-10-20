@@ -8,10 +8,10 @@
     margin: 10px 0;
     border-radius: 5px;
     cursor: pointer;
-    transition: opacity 0.2s ease-in-out;
     background-color: $alpha;
     outline: none;
     color: $color0;
+    transition: all 0.2s ease-in-out;
 
     span{
         display: inline-block;
@@ -86,29 +86,21 @@ a.btn{
     }
 }
 
-.btn-primary{
-    color: $alpha;
-    background-color: $primary;
+$types:
+    "primary" $alpha $primary,
+    "warning" $alpha $warning,
+    "danger" $alpha $danger;
 
-    &:hover, &:focus{
-        opacity: 0.93;
-    }
-}
-
-.btn-warning{
-    color: $alpha;
-    background-color: $warning;
-
-    &:hover, &:focus{
-        opacity: 0.93;
-    }
-}
-
-.btn-danger{
-    color: $alpha;
-    background-color: $danger;
-
-    &:hover, &:focus{
-        opacity: 0.93;
+@each $name, $txtColor, $mainColor in $types{
+    .btn-#{$name}{
+        color: $txtColor;
+        background-color: $mainColor;
+        border-color: $mainColor;
+        box-shadow: 0 0 15px transparentize($color: $mainColor, $amount: 0.8);
+    
+        &:hover, &:focus{
+            opacity: 0.95;
+            box-shadow: 0 0 15px transparentize($color: $mainColor, $amount: 0.6);
+        }
     }
 }

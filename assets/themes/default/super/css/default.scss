@@ -20,9 +20,18 @@
 @import "components/footer.scss";
 @import "components/card.scss";
 
+// :root{
+//     --main-bg-color: red;
+// }
+
+// .dark-mode {
+//     --main-bg-color: blue;
+// }
+
 body {
     @include fontRegular();
     background-color: $colorFond;
+    // background-color: var(--main-bg-color);
     line-height: 1.37;
 }
 
