@@ -48,7 +48,7 @@ header{
 //                     |__|                       |__|
 @media (min-width: 1024px) {
     header{
-        margin: 0 16px 16px calc(25% + 16px);
+        margin: 0 16px 16px calc(24% + 16px);
         justify-content: flex-end;
 
         .icon-menu{display: none;}
@@ -70,7 +70,7 @@ header{
 //                     |__|                      |__|
 @media (min-width:1280px) {
     header{
-        margin: 0 32px 24px calc(17% + 32px);
+        margin: 0 32px 24px calc(18% + 32px);
     }
 }
 //                      __   _  __    ___   ___    __
