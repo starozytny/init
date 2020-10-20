@@ -7,10 +7,42 @@
 
     <div class="toolbar"></div>
     
-    <div>
+    <div class="styleguide-liste" id="styleguide-liste-cards">
         <h2>Cards</h2>
-        <div>
-
+        <div class="cards-container">
+            <div class="cards-items">
+                {% for i in 0..9 %}
+                    <div class="card-1">
+                        <div class="card-1-drawing">
+                            <div class="image">
+                                <img src="{{ asset(path_images ~ "drawing.jpg") }}" alt="illustration">
+                            </div>
+                        </div>
+                        <div class="card-1-header">
+                            <div class="title">Title</div>
+                        </div>
+                        <div class="card-1-body">
+                            <p>
+                                People believe that carrying one of its discarded fangs will prevent mishaps 
+                                at sea, so the fangs are made into accessories.
+                            </p>
+                        </div>
+                        <div class="card-1-footer">
+                            <div class="items">
+                                <div class="item">
+                                    <img src="{{ asset("uploads/avatar/avatar-0.jpg") }}" alt="avatar-0">
+                                </div>
+                                <div class="item">
+                                    <img src="{{ asset("uploads/avatar/avatar-1.jpg") }}" alt="avatar-1">
+                                </div>
+                                <div class="item">
+                                    <img src="{{ asset("uploads/avatar/avatar-2.jpg") }}" alt="avatar-2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}

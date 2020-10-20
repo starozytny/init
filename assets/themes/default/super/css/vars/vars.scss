@@ -8,8 +8,8 @@
   align-items: $align;justify-content: $justify;
 }
 
-@mixin boxshadow(){
-  box-shadow: 0 0 10px transparentize($color: #4ECDC4, $amount: 0.9);
+@mixin boxshadow($opacity: 0.9){
+  box-shadow: 0 0 10px transparentize($color: #4ECDC4, $amount: $opacity);
 }
 
 @mixin scrollbar(){

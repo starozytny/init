@@ -141,6 +141,12 @@ main{
 .txt-warning{ color: var(--warning); }
 .txt-alpha{ color: var(--alpha); }
 
+.styleguide-liste{
+    h2{
+        margin-bottom: 16px;
+    }
+}
+
 //                      __   _____ __    ___    __
 //                     | _| |___  / /_  ( _ )  |_ |
 //    _____ _____ _____| |     / / '_ \ / _ \   | |_____ _____ _____
