@@ -2,10 +2,11 @@
 
 header{
     background-color: var(--alpha);
-    margin: 10px;
+    margin: 0 12px 12px 12px;
     border-radius: 10px;
-    padding: 15px;
+    padding: 12px;
     @include flex(row, center, space-between);
+    @include boxshadow();
 
     .icon-menu{color: var(--color0);}
 }
@@ -14,7 +15,7 @@ header{
     @include flex(row, center, center);
 
     & > *:not(:last-child){
-        margin-right: 10px;
+        margin-right: 8px;
     }
 
     a{
@@ -47,7 +48,7 @@ header{
 //                     |__|                       |__|
 @media (min-width: 1024px) {
     header{
-        margin: 15px 15px 15px calc(25% + 15px);
+        margin: 0 16px 16px calc(25% + 16px);
         justify-content: flex-end;
 
         .icon-menu{display: none;}
@@ -69,7 +70,7 @@ header{
 //                     |__|                      |__|
 @media (min-width:1280px) {
     header{
-        margin: 25px 30px 25px calc(17% + 30px);
+        margin: 0 32px 24px calc(17% + 32px);
     }
 }
 //                      __   _  __    ___   ___    __
@@ -80,6 +81,6 @@ header{
 //                     |__|                       |__|
 @media (min-width: 1600px){
     header{
-        margin: 25px 5% 25px calc(15% + 5%);
+        margin: 0 5% 24px calc(15% + 5%);
     }
 }
