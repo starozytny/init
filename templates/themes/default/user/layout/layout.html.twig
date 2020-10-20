@@ -1,52 +1,24 @@
 {% extends 'themes/default/base.html.twig' %}
 
-{% block title %}| Administrator{% endblock %}
+{% block title %}| Espace utilisateur{% endblock %}
 
 {% block stylesheets %}
     {{ encore_entry_link_tags('default_super') }}
+    {{ encore_entry_link_tags('default_admin') }}
+    {{ encore_entry_link_tags('default_user') }}
 {% endblock %}
 
 {% block body %}
 
     {# --------------- VARIABLES ---------------- #}
-    {% set path_images = "build/themes/default/super/images/" %}
+    {% set path_images = "build/themes/default/user/images/" %}
 
     {% set menu = [
         {
-            'path': path('super_dashboard'),
+            'path': path('user_dashboard'),
             'icon': 'home',
             'label': 'Dashboard',
-            'name': 'dashboard'
-        },
-        {
-            'path': path('super_users_index'),
-            'icon': 'user',
-            'label': 'Utilisateurs',
-            'name': 'utilisateurs'
-        },
-        {
-            'path': path('super_rgpd_index'),
-            'icon': 'padlock',
-            'label': 'RGPD',
-            'name': 'rgpd'
-        },
-        {
-            'path': path('super_settings_edit'),
-            'icon': 'settings',
-            'label': 'Paramètres',
-            'name': 'parametres'
-        },
-        {
-            'path': path('super_styleguide_index'),
-            'icon': 'heart',
-            'label': 'Styleguide',
-            'name': 'styleguide'
-        },
-        {
-            'path': path('admin_contact_index'),
-            'icon': 'email',
-            'label': 'Contact',
-            'name': 'contact'
+            'name': 'espace-utilisateur'
         }
     ] %}
 
@@ -56,20 +28,32 @@
             'icon': 'earth',
             'label': 'Retour au site',
             'name': 'site'
-        },
-        {
-            'path': path('user_dashboard'),
-            'icon': 'earth',
-            'label': 'Dashboard utilisateur',
-            'name': 'espace-utilisateur'
-        },
-        {
-            'path': path('admin_dashboard'),
-            'icon': 'earth',
-            'label': 'Dashboard admin',
-            'name': 'admin'
         }
     ] %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        {% set menuAdmin = [
+            {
+                'path': path('admin_dashboard'),
+                'icon': 'earth',
+                'label': 'Dashboard admin',
+                'name': 'admin'
+            }
+        ] %}
+        {% set menuBottom = menuBottom | merge(menuAdmin) %}
+    {% endif %}
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        {% set menuSuper = [
+            {
+                'path': path('super_dashboard'),
+                'icon': 'earth',
+                'label': 'Dashboard super',
+                'name': 'administrator'
+            }
+        ] %}
+        {% set menuBottom = menuBottom | merge(menuSuper) %}
+    {% endif %}
 
     {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
         {% set menuSwitch = [
@@ -84,7 +68,7 @@
     {% endif %}
 
     <div id="default" 
-        data-title="SuperAdmin"
+        data-title="Utilisateur"
         data-menu="{{ menu | json_encode() }}" 
         data-menu-bottom="{{ menuBottom | json_encode() }}"
         data-username="{{ app.user.username | capitalize }}" 
@@ -103,4 +87,6 @@
 
 {% block javascripts %}
     {{ encore_entry_script_tags('default_super') }}
+    {{ encore_entry_script_tags('default_admin') }}
+    {{ encore_entry_script_tags('default_user') }}
 {% endblock %}
