@@ -1,0 +1,15 @@
+@import "../../../vars/vars.scss";
+
+.agenda-table-header{
+    @include flex(row, center, flex-start);
+
+    .agenda-item{
+        @include flex(column, center, center);
+        width: 14%;
+
+        .label-desktop{
+            display: none;
+        }
+    }
+}
+

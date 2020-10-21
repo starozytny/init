@@ -2,6 +2,8 @@
 
 namespace App\Controller\User;
 
+use App\Service\CalendarService;
+use App\Service\SerializeData;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -10,11 +12,21 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AgendaController extends AbstractController
 {
+    const ATTRIBUTES_DATE = [];
+
     /**
      * @Route("/", name="index")
      */
-    public function index()
+    public function index(CalendarService $calendarService, SerializeData $serializer)
     {
-        return $this->render('root/user/pages/agenda/index.html.twig');
+        $week = $calendarService->getThisWeek();
+
+        $week = $serializer->getSerializeData($week, self::ATTRIBUTES_DATE);
+
+        dump($week);
+
+        return $this->render('root/user/pages/agenda/index.html.twig', [
+            'week' => $week
+        ]);
     }
 }
