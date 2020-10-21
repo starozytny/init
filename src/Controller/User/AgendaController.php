@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AgendaController extends AbstractController
 {
     const ATTRIBUTES_DATE = [];
+    const ATTRIBUTES_EVENT = ['id', 'startAtString', 'endAtString', 'name', 'content'];
 
     /**
      * @Route("/", name="index")
