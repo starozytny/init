@@ -5,5 +5,5 @@ import {Agenda} from './composants/agenda/Agenda';
 
 let el = document.getElementById("agenda");
 if(el){
-    ReactDOM.render(<Agenda week={el.dataset.week} />, el)
+    ReactDOM.render(<Agenda week={el.dataset.week} today={el.dataset.today} />, el)
 }

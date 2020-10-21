@@ -20,13 +20,14 @@ class AgendaController extends AbstractController
     public function index(CalendarService $calendarService, SerializeData $serializer)
     {
         $week = $calendarService->getThisWeek();
+        $today = $calendarService->getToday();
 
         $week = $serializer->getSerializeData($week, self::ATTRIBUTES_DATE);
-
-        dump($week);
+        $today = $serializer->getSerializeData($today, self::ATTRIBUTES_DATE);
 
         return $this->render('root/user/pages/agenda/index.html.twig', [
-            'week' => $week
+            'week' => $week,
+            'today' => $today
         ]);
     }
 }

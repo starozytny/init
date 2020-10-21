@@ -7,14 +7,15 @@ export class Agenda extends Component {
         super ()
 
         this.state = {
-            week: JSON.parse(props.week)
+            daySelected: JSON.parse(props.today),
+            week: JSON.parse(props.week),
         }
     }
     render () {
-        const {week} = this.state
+        const {daySelected, week} = this.state
 
         let content = <div className="liste-agenda">
-            <Week week={week}/>
+            <Week daySelected={daySelected} week={week}/>
         </div>
 
         return <>
@@ -25,10 +26,10 @@ export class Agenda extends Component {
 
 export class Week extends Component {
     render () {
-        const {week} = this.props
+        const {daySelected, week} = this.props
 
         let header = week.map((el, index) => {
-            return <div className="agenda-item" key={index}>
+            return <div className={"agenda-item" + (daySelected.wday == el.wday ? " active" : "")} key={index}>
                 <div className="label">
                     <div className="label-desktop">{Calendrier.getDayFr(el.wday)}</div>
                     <div className="label-mobile">{Calendrier.getShortDayFr(el.wday)}</div>
@@ -42,8 +43,12 @@ export class Week extends Component {
                 {header}
             </div>
             <div className="agend-table-body">
-                <div className="agenda-table-hours"></div>
-                <div className="agenda-table-bloc"></div>
+                <div className="agenda-table-hours">
+
+                </div>
+                <div className="agenda-table-events">
+
+                </div>
             </div>
         </div>
     }

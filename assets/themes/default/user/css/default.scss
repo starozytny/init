@@ -1,3 +1,48 @@
 // @import "~normalize.css"; import with super style
+
+:root{
+    --color0: #1A535C;
+    --color1: #4ECDC4;
+    --color2: #F7FFF7;
+    --color3: #FF6B6B;
+    --color4: #E7CF56;
+    --color5: #dddddd;
+    --color6: #5D5D5D;
+
+    --colorDisabled: #BCC0BC;
+
+    --nuance0: #ffcbf2;
+    --nuance1: #deaaff;
+    --nuance2: #c8e7ff;
+
+    --nuanceColor4: #f9c0c0;
+    --nuanceColor5: #f6d6ad;
+    --nuanceColor6: #fafcc2;
+
+    --colorFond: #F9F9F9;
+    --alpha: #fff;
+    --beta: #000;
+
+    --primary:#5b3cc4;
+    --primary-bg: #9ff0ff;
+    --success: rgb(23, 201, 100);
+    --success-bg: #83ffc5;
+    --danger: rgb(242, 19, 93);
+    --danger-bg: #ffb9b9;
+    --warning: rgb(255, 130, 0);
+    --dark: rgb(36, 33, 69);
+
+    --betaRGBA: 0,0,0;
+    --primaryRGBA: 91,60,196;
+    --warningRGBA: 255, 130, 0;
+    --dangerRGBA: 245, 147, 180;
+    --successRGBA: 23, 201, 100;
+
+    --color0RGBA: 26, 83, 92;
+    --color1RGBA: 78, 205, 196;
+
+    --colorBorder: #bcc0bc75;
+}
+
 @import "vars/fonts.scss";
 @import "vars/vars.scss";

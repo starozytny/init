@@ -6,9 +6,21 @@
     .agenda-item{
         @include flex(column, center, center);
         width: 14%;
+        opacity: 0.6;
 
+        .label{
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
         .label-desktop{
             display: none;
+        }
+        .number{
+            @include fontSemibold();
+        }
+        
+        &.active{
+            color: var(--color3);
         }
     }
 }
