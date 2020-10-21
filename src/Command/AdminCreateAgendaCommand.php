@@ -34,6 +34,7 @@ class AdminCreateAgendaCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $io->title('Reset des tables');
+        $this->resetTable($io,'agenda_event_user');
         $this->resetTable($io,'agenda_event');
 
         $user = $this->em->getRepository(User::class)->findOneBy(['username' => 'shanbo']);
@@ -42,10 +43,9 @@ class AdminCreateAgendaCommand extends Command
         for($i=0; $i<5 ; $i++) {
             $new = (new AgendaEvent())
                 ->setName("Evenement " . $i)
-                ->setStartAt(new DateTime())
-                ->setEndAt(new DateTime())
-                ->setContent("
-                        Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
+                ->setStartAt(new DateTime(date('d-m-Y\\TH:i:0', strtotime('22 October 2020 8:00:00'))))
+                ->setEndAt(new DateTime(date('d-m-Y\\TH:i:0', strtotime('22 October 2020 10:00:00'))))
+                ->setContent("Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
                         Sed odio lectus, lacinia vel lectus ut, ultricies sodales odio. Sed posuere sit amet tellus el
                         eifend porta. Aenean sit amet elit eget neque scelerisque sagittis elementum quis nibh. Pellen
                         tesque vehicula nisi vel interdum laoreet. Interdum et malesuada fames ac ante ipsum primis in 

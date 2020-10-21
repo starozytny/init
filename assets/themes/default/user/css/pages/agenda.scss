@@ -1,3 +1,67 @@
 @import "../vars/vars.scss";
 
 @import "./split/agenda/header.scss";
+@import "./split/agenda/events.scss";
+
+.agenda-table-times{
+    display: none;
+}
+
+.agenda-table-slots{
+    .agenda-slots{
+        width: 100%;
+    }
+}
+
+//                      __   _____ __    ___    __
+//                     | _| |___  / /_  ( _ )  |_ |
+//    _____ _____ _____| |     / / '_ \ / _ \   | |_____ _____ _____
+//   |_____|_____|_____| |    / /| (_) | (_) |  | |_____|_____|_____|
+//                     | |   /_/  \___/ \___/   | |
+//                     |__|                    |__|
+@media (min-width:768px) {
+    .agenda-table-body{
+        @include flex(row, flex-start, flex-start)
+    }
+    .agenda-table-times{
+        display: block;
+        width: 40px;
+        border-right: 1px solid var(--color5);
+        padding-right: 12px;
+        opacity: 0.7;
+        font-size: 14px;
+        
+        .agenda-hours{
+            min-height: 40px;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+        }
+    }
+    
+    .agenda-table-slots{
+        @include flex(row, flex-start, flex-start);
+        width: calc(100% - 64px - 24px);
+
+        .agenda-slots{
+            width: 14%;
+        }
+
+        .agenda-slot{
+            border-bottom: 1px solid var(--color5);
+            border-right: 1px solid var(--color5);
+            padding: 12px;
+        }
+
+        .agenda-events{
+            position: relative;
+            @include flex(row, flex-start, flex-start);
+            min-height: 40px;
+            max-height: 40px;
+
+            .event{
+
+            }
+        }
+    }
+
+}

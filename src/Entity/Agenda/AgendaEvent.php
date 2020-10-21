@@ -113,7 +113,32 @@ class AgendaEvent
 
     public function getEndAtString()
     {
-        return date_format($this->getStartAt(), 'd-m-Y');
+        return date_format($this->getEndAt(), 'd-m-Y');
+    }
+
+    public function getStartAtTimeString()
+    {
+        return date_format($this->getStartAt(), 'H:i');
+    }
+
+    public function getEndAtTimeString()
+    {
+        return date_format($this->getEndAt(), 'H:i');
+    }
+
+    public function getStartAtYear()
+    {
+        return intval(date_format($this->getStartAt(), 'Y'));
+    }
+
+    public function getStartAtNumberYear()
+    {
+        return intval(date_format($this->getStartAt(), 'z'));
+    }
+
+    public function getStartAtDayNumberWeek()
+    {
+        return intval(date_format($this->getStartAt(), 'N'));
     }
 
     public function getName(): ?string
