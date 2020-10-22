@@ -29,6 +29,7 @@ export class Week extends Component {
     render () {
         const {daySelected, week, events} = this.props
 
+        // HEADER --- 7 jours
         let header = week.map((el, index) => {
             return <div className={"agenda-item" + (daySelected.wday == el.wday ? " active" : "")} key={index}>
                 <div className="label">
@@ -38,13 +39,16 @@ export class Week extends Component {
                 <div className="number">{el.mday}</div>
             </div>
         })
-        let timeCalendar = Calendrier.getTimeCalendar(6,20);
+
+        // TIME --- de 6h à 00h
+        let timeCalendar = Calendrier.getTimeCalendar(6,23);
         let timeSlots = timeCalendar.map((el, index) => {
             return <div key={index} className="agenda-hours">
                 <div className="label">{el}</div>
             </div>
         })
 
+        // EVENTS --- 
         let eventSlots = week.map((elemDay, index) => {
 
             let slots = []
@@ -54,28 +58,35 @@ export class Week extends Component {
                 events.forEach((el, index) => {
                     if(el.startAtDayNumberWeek == elemDay.wday && el.startAtTimeString == elemTime){
 
+                        // EVENTS --- Avatars
                         let avatars = []
                         el.users.forEach((user, index) => {
                             avatars.push(<div key={user.id} className="avatar">
                                 <img src={"../../uploads/" + user.avatar} alt="avatar"/>
                             </div>)
                         })
+
+                        let name = el.name
+                        if(name.length > 5){
+                            name = name.substring(0, 13) + '...'
+                        }
                         
+                        // EVENTS --- Cards
                         evenements.push(<div key={el.id} className="event">
                             <div className="event-color event-color-"></div>
                             <div className="event-infos">
-                                <div className="event-name">{el.name}</div>
+                                <div className="event-name">{name}</div>
                                 <div className="event-avatars">{avatars}</div>
                             </div>
                             <div className="event-when">
                                 <div className="event-time">{el.startAtTimeString}</div>
                             </div>
-                            
                         </div>)
                     }               
                 })    
                 
-                slots.push(<div key={index} className="agenda-slot">
+                // EVENTS --- Add event to slot
+                slots.push(<div key={index} className={"agenda-slot agenda-slot-fillWith-" + evenements.length}>
                     <div className="agenda-events">
                         {evenements.length != 0 ? evenements : null}
                     </div>
