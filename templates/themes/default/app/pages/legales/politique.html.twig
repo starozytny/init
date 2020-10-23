@@ -7,6 +7,7 @@
 
     {% set websiteName = "WebsiteName" %}
     {% set websiteUrl = "https://websiteName.fr" %}
+    {% set addressPostale = "Adresse postale" %}
 
     <section class="legales">
         <div>
@@ -62,7 +63,7 @@
             <p>
                 Ces droits peuvent être exercés sur demande via le <a href="{{ path('app_rgpd') }}">formulaire de demande RGPD pour faire exercer ses droits.</a> ou par courrier à 
                 l'adresse suivante : <br>
-                {{ websiteName }} - - France
+                {{ websiteName }} - {{ addressPostale }} - France
             </p>
             <p>
                 Dans le cas où le responsable du traitement des données décide de ne pas répondre à la demande de l'utilisateur, 
