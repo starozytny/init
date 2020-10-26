@@ -159,6 +159,15 @@ export function Switcher({identifiant, valeur, children, isChecked, onChange}){
     return (<ClassiqueStructure valeur={valeur} identifiant={identifiant} content={content} label={children} />)
 }
 
+export function InputFile({valeur, identifiant, onGetFile, children, accept, dropLabel, dropError}) {
+    let content = <div className="form-files">
+        <Drop label={dropLabel} labelError={dropError}
+            accept={accept} maxFiles={1} onGetFile={onGetFile}/>
+    </div>
+
+    return (<ClassiqueStructure valeur={valeur} identifiant={identifiant} content={content} label={children} />)
+}
+
 export function Error({valeur}){
     return (
         <div className="error">{valeur.error ? <><span className='icon-warning'></span>{valeur.error}</> : null}</div>
