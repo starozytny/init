@@ -15,6 +15,7 @@ import { registerLocale, setDefaultLocale } from  "react-datepicker";
 import fr from 'date-fns/locale/fr';
 registerLocale('fr', fr)
 import "react-datepicker/dist/react-datepicker.css";
+import {Drop} from './Drop';
 
 export function Input({type="text", identifiant, valeur, onChange, children, placeholder}) {
     let content = <input type={type} name={identifiant} id={identifiant} placeholder={placeholder} value={valeur.value} onChange={onChange}/>
