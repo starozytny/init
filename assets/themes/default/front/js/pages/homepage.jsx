@@ -1,7 +1,7 @@
 import '../../css/pages/homepage.scss';
-import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
-import Compteur from '../components/composants/Compteur';
+import React        from 'react';
+import ReactDOM     from 'react-dom';
+import Compteur     from '../components/composants/Compteur';
 
 experience();
 
