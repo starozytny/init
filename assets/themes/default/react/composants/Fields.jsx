@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Trumbowyg from 'react-trumbowyg';
 import 'react-trumbowyg/dist/trumbowyg.min.css';
 import '../../../../../node_modules/trumbowyg/dist/plugins/base64/trumbowyg.base64';
@@ -10,11 +11,13 @@ import '../../../../../node_modules/trumbowyg/dist/plugins/pasteimage/trumbowyg.
 import '../../../../../node_modules/trumbowyg/dist/plugins/history/trumbowyg.history';
 import '../../../../../node_modules/trumbowyg/dist/plugins/upload/trumbowyg.upload';
 import '../functions/textarea/plugins/trumbowyg.alert';
+
 import DatePicker from "react-datepicker";
 import { registerLocale, setDefaultLocale } from  "react-datepicker";
 import fr from 'date-fns/locale/fr';
 registerLocale('fr', fr)
 import "react-datepicker/dist/react-datepicker.css";
+
 import {Drop} from './Drop';
 
 export function Input({type="text", identifiant, valeur, onChange, children, placeholder}) {
