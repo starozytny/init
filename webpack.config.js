@@ -22,6 +22,7 @@ Encore
         '@superFolder': path.resolve(__dirname, './assets/themes/default/super'),
         '@userFolder': path.resolve(__dirname, './assets/themes/default/user'),
         '@publicFolder': path.resolve(__dirname, './public'),
+        '@nodeModulesFolder': path.resolve(__dirname, './node_modules'),
     })
 
     .copyFiles({
