@@ -13,15 +13,19 @@ export class Page extends Component {
             havePagination, perPage, taille, itemsPagination, 
             haveBack, hrefBack, txtBack,
             haveSearch, onSearch,
-            haveAdd, onAdd,
+            haveAdd, onAdd, txtAdd,
             haveExport, urlExportExcel, urlExportCsv, nameExport,
             haveImport, asideImport,
-            haveAllDelete, onAllDelete
+            haveAllDelete, onAllDelete, 
+            haveFilter, filter
         } = this.props
 
         return <>
             {infos ? <div className="page-infos">{infos}</div> : null}
-            <Toolbar haveBack={haveBack} hrefBack={hrefBack} txtBack={txtBack} haveSearch={haveSearch} onSearch={onSearch} haveAdd={haveAdd} onAdd={onAdd}/>
+            <Toolbar haveBack={haveBack} hrefBack={hrefBack} txtBack={txtBack} 
+                     haveSearch={haveSearch} onSearch={onSearch} 
+                     haveAdd={haveAdd} onAdd={onAdd} txtAdd={txtAdd}
+                     haveFilter={haveFilter} filter={filter}/>
             {content}
             {havePagination ? <Pagination perPage={perPage} taille={taille} items={itemsPagination} onUpdate={(items) => this.props.onUpdate(items)}/> : null}
             <Others haveExport={haveExport} urlExportExcel={urlExportExcel} urlExportCsv={urlExportCsv} nameExport={nameExport} 

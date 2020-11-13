@@ -136,7 +136,7 @@ export class AsideUser extends Component {
             { 'id': 0, 'value': 'ROLE_USER',  'label': 'Utilisateur', 'identifiant': 'utilisateur', 'checked': false },
         ]
 
-        if(roles.length != 0){
+        if(roles.value.length != 0){
             rolesItems.map(el => {
                 roles.value.map(elem => {
                     if (elem == el.value){ el.checked = true }

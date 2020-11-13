@@ -30,6 +30,10 @@
     .toolbar-item:not(:last-child) > .btn{
         margin-bottom: 0;
     }
+
+    .toolbar-item-filter{
+        margin-top: 12px;
+    }
 }
 
 .toolbar{
@@ -47,7 +51,7 @@
 //                     |__|                    |__|
 @media (min-width:768px) {
     .toolbar{
-        @include flex(row, center, space-between);
+        @include flex(row, flex-start, space-between);
 
         .toolbar-left, .toolbar-right{
             width: 50%;
@@ -62,6 +66,15 @@
 
             .toolbar-item:not(:last-child){
                 margin-right: 12px;
+            }
+        }
+        .toolbar-left + .toolbar-right{
+            margin-top: 0;
+        }
+
+        .toolbar-item-filter{
+            .line .form-group{
+                align-items: flex-end;
             }
         }
     }

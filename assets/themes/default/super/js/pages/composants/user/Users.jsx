@@ -9,6 +9,7 @@ import ActionsArray       from '@reactFolder/functions/actions_array';
 import {Page}             from '@reactFolder/composants/page/Page';
 import {Aside}            from '@reactFolder/composants/page/Aside';
 import {getSelector}      from '@reactFolder/composants/page/Selector';
+import {Checkbox}         from '@reactFolder/composants/Fields';
 
 import {AsideUser}        from './AsideUser';
 import {AsideImport}      from './AsideImport';
@@ -26,6 +27,7 @@ export class Users extends Component {
             users: users,
             usersList: usersList,
             tailleList: users.length,
+            itemsFilter: {value: [0,1,2], error: ''}
         }
 
         this.asideuser = React.createRef()
@@ -38,6 +40,19 @@ export class Users extends Component {
         this.handleConvertIsNew = this.handleConvertIsNew.bind(this)
         this.handleDelete = this.handleDelete.bind(this)
         this.handleAllDelete = this.handleAllDelete.bind(this)
+        this.handleChange = this.handleChange.bind(this)
+    }
+
+    handleChange = (e) => { 
+        let name = e.currentTarget.name;
+        let value = e.currentTarget.value;
+
+        const {itemsFilter} = this.state
+        if(name === "itemsFilter"){
+            value = (e.currentTarget.checked) ? [...itemsFilter.value, ...[parseInt(value)]] :  itemsFilter.value.filter(v => v != value)
+        }        
+
+        this.setState({[name]: {value: value}}) 
     }
 
     handleUpdateList = (usersList) => { this.setState({ usersList: usersList })  }
@@ -172,13 +187,31 @@ export class Users extends Component {
     }
 
     render () {
-        const {users, usersImmuable, usersList, tailleList} = this.state;
+        const {users, usersImmuable, usersList, tailleList, itemsFilter} = this.state;
+
+        let rolesItems = [
+            { 'id': 1, 'value': 1, 'label': 'Super admin', 'identifiant': 'superamdin', 'checked': false },
+            { 'id': 2, 'value': 2, 'label': 'Admin', 'identifiant': 'admin', 'checked': false },
+            { 'id': 0, 'value': 0,  'label': 'Utilisateur', 'identifiant': 'utilisateur', 'checked': false },
+        ]
+        if(itemsFilter.length != 0){
+            rolesItems.map(el => {
+                itemsFilter.value.map(elem => {
+                    if (elem == el.value){ el.checked = true }
+                })
+            })
+        }
+        let filter = <>
+            <div className="line">
+                <Checkbox items={rolesItems} name="itemsFilter" valeur={itemsFilter} onChange={this.handleChange}>Filtres</Checkbox>
+            </div>
+        </>
 
         let content = <div className="liste liste-user">
-            <UsersList users={usersList} onOpenAside={this.handleOpenAside} onConvertIsNew={this.handleConvertIsNew} onDelete={this.handleDelete} />
+            <UsersList users={usersList} itemsFilter={itemsFilter} onOpenAside={this.handleOpenAside} onConvertIsNew={this.handleConvertIsNew} onDelete={this.handleDelete} />
         </div>
 
-        let asideContent = <AsideUser users={usersImmuable} onUpdate={this.handleUpdateUser} ref={this.asideuser} />
+        let asideContent = <AsideUser users={usersImmuable} rolesItems={rolesItems} onUpdate={this.handleUpdateUser} ref={this.asideuser} />
         let asideImport = <AsideImport urlForm={Routing.generate('super_users_import')}/>
         
         return <>
@@ -189,6 +222,7 @@ export class Users extends Component {
                   haveExport="true" nameExport="utilisateurs" urlExportExcel={Routing.generate('super_users_export', {'format': 'excel'})} urlExportCsv={Routing.generate('super_users_export', {'format': 'csv'})}
                   haveImport="true" asideImport={asideImport}
                   haveAllDelete="true" onAllDelete={this.handleAllDelete}
+                  haveFilter="true" filter={filter}
                   />
             <Aside content={asideContent} ref={this.aside}/>
             
