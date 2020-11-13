@@ -47,12 +47,20 @@ export class Users extends Component {
         let name = e.currentTarget.name;
         let value = e.currentTarget.value;
 
-        const {itemsFilter} = this.state
+        const {usersImmuable, itemsFilter} = this.state
         if(name === "itemsFilter"){
             value = (e.currentTarget.checked) ? [...itemsFilter.value, ...[parseInt(value)]] :  itemsFilter.value.filter(v => v != value)
         }        
 
-        this.setState({[name]: {value: value}}) 
+        let newItems = [];
+        usersImmuable.forEach(elem => {
+            if(value.includes(elem.highRoleCode)){
+                newItems.push(elem)
+            }
+        })
+
+        let newList = newItems.slice(0, 12)
+        this.setState({ users: newItems, usersList: newList,  tailleList: newItems.length, [name]: {value: value} }) 
     }
 
     handleUpdateList = (usersList) => { this.setState({ usersList: usersList })  }
@@ -62,7 +70,7 @@ export class Users extends Component {
             if(v.username.toLowerCase().includes(value) || v.email.toLowerCase().includes(value)){ return v; }
         })
         let newList = newItems.slice(0, 12)
-        this.setState({ usersList: newList, users: newItems, tailleList: newItems.length })  
+        this.setState({ users: newItems, usersList: newList, tailleList: newItems.length })  
     }
 
     handleOpenAside = (type, id) => { 
